@@ -1,0 +1,95 @@
+.writeReview {
+  height: 400px;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 25px;
+  border: 3px solid #FFF;
+}
+
+.fieldContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.fieldContainer input {
+  height: 25px;
+  border-radius: 5px;
+  border: none;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.rating .star {
+  cursor: pointer;
+  color: #fff; /* Set initial color */
+}
+
+.rating .star:hover {
+  transform: scale(1.2);
+}
+
+.selected {
+  color: #e2ae03; /* Set selected color */
+}
+
+.reviewBtns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  column-gap: 10px;
+}
+
+.submitBtn {
+  border: none;
+  height: 30px;
+  border-radius: 25px;
+  padding: 0 20px;
+  background-color: #ff6f00;
+  color: #FFF;
+  font-family: 'poppins', sans-serif;
+  transition: 0.5s ease;
+}
+
+.submitBtn:hover {
+  background-color: #FFF;
+  color: #002933;
+}
+
+.cancelBtn {
+  border: none;
+  height: 30px;
+  border-radius: 25px;
+  padding: 0 20px;
+  background-color: transparent;
+  color: #FFF;
+  transition: 0.5s ease;
+  font-weight: 500;
+  font-family: 'poppins', sans-serif;
+}
+
+.cancelBtn:hover {
+  background-color: #FFF;
+  color: #002933;
+}
+
+textarea {
+  font-family: 'poppins', sans-serif;
+  border-radius: 10px;
+}
+
+@media (max-width:450px) {
+  .writeReview {
+    max-width: 360px;
+  }
+}

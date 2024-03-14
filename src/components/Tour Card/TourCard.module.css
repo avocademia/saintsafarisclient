@@ -1,0 +1,91 @@
+.card {
+    width: 250px;
+    height: auto;
+    transition: transform 0.3s;
+    box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.5);
+    padding: 10px 10px 20px 10px;
+    border-radius: 20px;
+    margin: 100px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.textContainer {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+.card:hover {
+    transform: scale(1.1);
+}
+
+.imageContainer{
+    height: 150px;
+    width: 200px;
+    margin-top: -89px;
+    border-radius: 20px;
+    background-color: #00072D;
+    box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.5);
+}
+
+.imageContainer img {
+    height: 150px;
+    width: 200px;
+    border-radius: 20px;
+  }
+
+.cardTitle {
+    font-family: 'poppins', sans-serif;
+    font-size: 15px;
+    justify-content: center;
+    color: #00072D;
+    width: 95%;
+}
+
+.starContainer {
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardButton {
+    box-shadow: 3px 3px 5px 0 rgba(0,0,0,0.5);
+    border-radius: 25px;
+    width: auto;
+    padding: 10px;
+    border: none;
+    font-size: 15px;
+    font-family: 'poppins', sans-serif;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.cardLink {
+    color: #1b1b1b;
+    text-decoration: none;
+}
+
+.cardButton:hover {
+    transition: 0.7s ease-in-out;
+    color: #f0f0f0;
+    background-color:  #00072D;
+}
+
+.cardLink:hover {
+    color: #f0f0f0;
+}
+
+.cardDescription {
+    font-size: 14px;
+    text-align: center;
+    max-width: 240px;
+}
+
+.totalReviews {
+    font-size: 14px;
+    color: #2b2b2b;
+    margin: 10px 0;
+}

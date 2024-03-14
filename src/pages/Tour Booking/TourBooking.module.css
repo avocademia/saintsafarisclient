@@ -1,0 +1,45 @@
+/* Styling for checkboxes */
+.checkbox-container {
+    margin-bottom: 10px;
+}
+
+.checkbox-label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+}
+
+.checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-label::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+}
+
+.checkbox-label input:checked ~::before {
+    background-color: #007bff;
+}
+
+.checkbox-label input:checked ~::after {
+    content: '\2713'; /* Checkmark symbol */
+    font-size: 16px;
+    color: #fff;
+    position: absolute;
+    top: 4px;
+    left: 7px;
+}

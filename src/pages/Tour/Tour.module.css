@@ -1,0 +1,228 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start !important;
+    background-color: #002933;
+    color: #c0c0c0;
+    height: fit-content !important;
+    overflow-y: hidden;
+}
+
+.mySwiper {
+    max-width: 1024px;
+}
+
+
+.imageSlider {
+    margin: 100px 0 0 0 !important;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.imageSlider h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 60px;
+}
+
+.swiperSlider {
+    background-position: center;
+    background-size: cover;
+    width: 300px !important;
+    height: 200px !important;
+    border-radius: 10px;
+    cursor: pointer !important;
+    align-self: center !important;
+}
+
+.swiperSlider img {
+    display: block;
+    height: 200px;
+    width: 100%;
+    border-radius: 15px;
+  }
+
+  .secondSection {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    column-gap: 15px;
+  }
+
+  .description {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .description p {
+    text-align: center;
+    line-height: 30px;
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .durationButtons {
+    max-width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+  }
+
+  .duration {
+    width: 100px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+  }
+
+  .duration p {
+    font-family: 'pacifico', cursive;
+    font-size: 20px;
+  }
+
+  .tourPackageButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    column-gap: 30px;
+    width: 100%;
+  }
+
+  .tourPackageButtons button {
+    border: none;
+    height: 50px;
+    padding: 0 20px;
+    border-radius: 25px;
+    background-color: #ff6f00;
+    color: #FFF;
+    font-family: 'poppins', sans-serif;
+    transition: 0.7s ease-in;
+  }
+
+  .tourPackageButtons button:hover {
+    background-color: #FFF;
+    color: #002933;
+  }
+
+  .thirdSection {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 30px;
+  }
+
+  .reviewSliderContainer {
+    height: 400px;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .reviewSlider {
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    height: 250px;
+    padding: 0 5px 20px 5px;
+  }
+
+  .topSlideSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .customerProfile {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    color: #002933;
+    column-gap: 10px;
+  }
+
+  .customerProfile h3 {
+    font-family: 'pacifico', cursive;
+    font-size: 20px;
+    padding: 0;
+  }
+
+  .profilePhoto {
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    background-color: #3b3b3b;
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .profilePhoto img {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+  }
+
+  .quote {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .quote img {
+    height: 30px;
+    width: 30px;
+    border-radius: 70px;
+  }
+
+  .slideBottomSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #000;
+    padding-left: 8px;
+  }
+  
+  .customerRating {
+    margin-bottom: 8px;
+  }
+
+  .customerStars {
+    color: #e2ae03;
+  }
+  
+.reviewBody {
+    width: 280px;
+    text-align: center;
+  }
+
+  @media (max-width: 450px) {
+    .mySwiper {
+      max-width: 400px;
+    }
+
+    .reviewSlider {
+      max-width: 350px;
+    }
+  }

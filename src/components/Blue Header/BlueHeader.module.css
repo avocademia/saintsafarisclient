@@ -1,0 +1,147 @@
+.blueHeader {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 15px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    z-index: 10;
+    background-color: #f0f0f0;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+.logo {
+    max-width: 100px;
+    height: 70px;
+}
+
+.navMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 15px;
+    margin: 0 40px 0 0; /*Update when you add Nav Items*/
+}
+
+.blueNavItem {
+    color: #233393 !important;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    transition: 0.5s ease;
+    text-decoration: none;
+}
+
+.blueNavItem:hover {
+    color: #1b1b1b !important;
+}
+
+.blueNavItem:after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    transition: width 0.5s ease;
+    background-color: #1b1b1b;
+}
+
+.blueNavItem:hover:after {
+    width: 100%;;
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    column-gap: 25px;
+}
+
+.blueHeaderButton {
+    width: 20px; 
+   height: 20px; 
+   cursor: pointer; 
+   fill: #233393;
+   transition: 0.3s ease;
+}
+
+.blueHeaderButton:Hover {
+    transform: scale(1.5);
+    color: #1B1B1B !important;
+}
+
+.hamburgerButton {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.blueHamburger {
+    width: 20px; 
+    height: 20px; 
+    cursor: pointer; 
+    fill: #233393;
+}
+
+.activeHamburger {
+    width: 20px; 
+    height: 20px; 
+    cursor: pointer; 
+    fill: #f0f0f0;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .blueHeader {
+        justify-content: space-between;
+    }
+    .hamburgerButton {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .navMenu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        background-color: #233393;
+        transition: transform 0.7s ease;
+        transform: translateY(-120vh)
+    }
+
+    .responsiveNav {
+        transform: none;
+    }
+
+    .blueNavItem {
+        color: #f0f0f0 !important ;
+    }
+    .blueNavItem:after {
+        background-color: #1b1b1b ;
+    }
+
+    .blueHeaderButton {
+        fill: #f0f0f0 !important;
+    }
+
+    .activeHamburger {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+    }
+}
+

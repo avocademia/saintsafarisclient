@@ -1,0 +1,86 @@
+
+.homePage {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #111632;
+    overflow-y: hidden;
+    width: 100vw;
+}
+
+.heroSection {
+    color: #f0f0f0;
+    background-image: url(../../assets/heroBackground.png);
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 10px 0 10px;
+    width: 100vw;
+}
+
+.heroSection h1 {
+    font-family: 'Nunito', sans-serif;
+}
+
+.heroSection p {
+    max-width: 400px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.signupBtn {
+    background-color: #ff6f00;
+    color: #f0f0f0;
+    font-family: 'poppins', sans-serif;
+    font-weight: 500;
+    width: 120px;
+    height: 30px;
+    border-radius: 8px;
+    transition: 0.3s ease;
+    margin: 30px auto;
+}
+
+.signupBtn:hover {
+    background-color: #944103;
+    transform: scale(1.1);
+}
+
+.toursSection {
+    width: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #f0f0f0;
+}
+
+.toursSection h1 {
+    font-family: 'Nunito', sans-serif;
+    flex-wrap: wrap;
+    max-width: 370px;
+}
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    column-gap: 20px;
+}
+
+@media (max-width: 500px) {
+
+}
+
+@media (max-width: 300px) {
+
+    .toursSection {
+        margin: 40px 0 0 0;
+    }
+    .toursSection h1 {
+        max-width: 280px;
+        font-size: 40px;
+    }
+}

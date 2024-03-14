@@ -1,0 +1,143 @@
+.whiteHeader {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 15px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    z-index: 10;
+    background-color: transparent;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+.logo {
+    max-width: 100px;
+    height: 70px;
+}
+
+.navMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 15px;
+    margin: 0 40px 0 0; /*Update when you add Nav Items*/
+}
+
+.whiteNavItem {
+    color: #f0f0f0 !important;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    transition: 0.5s ease;
+    text-decoration: none;
+}
+
+
+.whiteNavItem:after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    transition: width 0.5s ease;
+    background-color: #f0f0f0;
+}
+
+.whiteNavItem:hover:after {
+    width: 100%;;
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    column-gap: 25px;
+}
+
+.whiteHeaderButton {
+    width: 20px; 
+   height: 20px; 
+   cursor: pointer; 
+   fill: #f0f0f0;
+   transition: 0.3s ease;
+}
+
+.whiteHeaderButton:Hover {
+    transform: scale(1.5);
+}
+
+.hamburgerButton {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.whiteHamburger {
+    width: 20px; 
+    height: 20px; 
+    cursor: pointer; 
+    fill: #f0f0f0;
+}
+
+.activeHamburger {
+    width: 20px; 
+    height: 20px; 
+    cursor: pointer; 
+    fill: #f0f0f0;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .whiteHeader {
+        justify-content: space-between;
+    }
+    .hamburgerButton {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .navMenu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        background-color: #233393;
+        transition: transform 0.7s ease;
+        transform: translateY(-120vh)
+    }
+
+    .responsiveNav {
+        transform: none;
+    }
+
+    .whiteNavItem {
+        color: #f0f0f0 ;
+    }
+    .whiteNavItem:after {
+        background-color: #f0f0f0;
+    }
+
+    .headerButton {
+        fill: #f0f0f0 ;
+    }
+
+    .activeHamburger {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+    }
+}
+
