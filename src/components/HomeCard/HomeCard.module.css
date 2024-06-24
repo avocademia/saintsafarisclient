@@ -39,7 +39,7 @@
     font-family: 'poppins', sans-serif;
     font-size: 15px;
     justify-content: center;
-    color: #00072D;
+    color: #f0f0f0;
     width: 95%;
 }
 
@@ -72,14 +72,14 @@
 }
 
 .cardLink {
-    color: #1b1b1b;
+    color: #f0f0f0;
     text-decoration: none;
 }
 
 .cardButton:hover {
     transition: 0.7s ease-in-out;
-    color: #f0f0f0;
-    background-color:  #00072D;
+    color: #00072d;
+    background-color:  #f0f0f0;
 }
 
 .cardLink:hover {
@@ -94,6 +94,6 @@
 
 .totalReviews {
     font-size: 14px;
-    color: #2b2b2b;
+    color: #f0f0f0;
     margin: 10px 0;
 }

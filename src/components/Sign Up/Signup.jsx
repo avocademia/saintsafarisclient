@@ -109,18 +109,18 @@ const initialUser = {
                     }
 const Signup = () => {
 
-  const [profilePicture, setProfilePicture] = useState(null);
+  const [profilePicture, setProfilePicture] = useState(null)
 
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+    const file = event.target.files[0]
+    const reader = new FileReader()
   
     reader.onloadend = () => {
-      setProfilePicture(reader.result);
+      setProfilePicture(reader.result)
     };
 
     if (file) {
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file)
     }
   };
 
@@ -134,21 +134,31 @@ const handleChange = ({target}) => {
   }) )
 }
 
+const devUrl = import.meta.env.VITE_DEV_URL
+const prodUrl = import.meta.env.VITE_PROD_URL
+
   const handleSignUp = async (event) => {
-    event.preventDefault(); 
-    const url = "http://localhost:1337/api/auth/local/register"
+    event.preventDefault()
+    const url = `${devUrl}/api/auth/local/register`
     try {
       if (user.first_name && user.surname && user.username && user.email && user.password && user.dob) {
 
           const res = await axios.post(url, user)
-          const success = () => toast("Success! Go to Log In");
+          
+          if (res) {
+            setUser(initialUser)
+            toast("A confirmation email has been sent! Confirm Email then Log In", {
+              hideProgressBar: true,
+            })
+            return <p> Account succeefully created, Go back and <Link to="/userauth">Log In</Link></p>
+          }
 
-         //console.log(user)
+
       }
     } catch (error) {
-      toast.error(error.message, {
+      toast("An error occured please try again later", {
         hideProgressBar: true,
-      })
+      })  
     }
   }
   return (
@@ -237,21 +247,6 @@ const handleChange = ({target}) => {
         value={user.dob}
         />
       </FieldContainer>
-      <ImageHolder>
-          <FieldContainer>
-             <DpInput 
-             type="file" 
-             name="dp" 
-             accept="image/jpeg, image/png" 
-             onChange={handleImageUpload}
-             value={user.dp}
-             />
-          </FieldContainer>
-          <PhotoLabel htmlFor="profilePicture">Profile Picture</PhotoLabel>
-          <ProfilePictureButton htmlFor="profilePicture" image={profilePicture}>
-            {!profilePicture ? <PlusSign>+</PlusSign> : null}
-          </ProfilePictureButton>
-        </ImageHolder>
 
       <FieldContainer style={{marginTop: '20px'}}>
         <Button type="button" onClick={handleSignUp}>Sign Up</Button>

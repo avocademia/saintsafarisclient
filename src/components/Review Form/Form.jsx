@@ -1,40 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+import { FaStar } from 'react-icons/fa'
+import { userData } from '../../Helpers'
 import style from "./Form.module.css"
-import { FaStar } from "react-icons/fa"
 
-const Form = () => {
-    const [rating, setRating] = useState(0); // Initialize with 0
 
-    const handleStarClick = (index) => {
-        // Add 1 to index since index starts from 0 but rating should start from 1
-        setRating(index + 1);
 
-        console.log(rating)
-    };
+const ReviewForm = ({tourId, newReview}) => {
+  const [rating, setRating] = useState(0)
+  const [body, setBody] = useState('')
+  const [first_name, setFirstName] = useState('')
+  const [surname, setSurname] = useState('')
+  const [username, setUsername] = useState('')
+  const tourid = parseInt(tourId, 10)
 
-    return (
-        <div className={style.writeReview}>
-            <h3>Write a review</h3>
-            <form action="">
-                <div className={style.rating}>
-                    {[...Array(5)].map((_, index) => (
-                        <FaStar
-                            key={index}
-                            onClick={() => handleStarClick(index)}
-                            className={`${index < rating ? style.selected : style.star}`}
-                        />
-                    ))}
-                </div>
-                <textarea name="opinion" id="" cols="30" rows="5" placeholder="Write your review" maxLength="100"></textarea>
-                {/* Input field to hold the rating value */}
-                <input type="hidden" name="rating" value={rating} />
-                <div className={style.reviewBtns}>
-                    <button className={style.submitBtn}>Submit</button>
-                    <button className={style.cancelBtn}>Cancel</button>
-                </div>
-            </form>
-        </div>
-    );
-}
+  useEffect(() => {
+        const { firstName, username, surname } = userData();
+        setFirstName(firstName)
+        setUsername(username)
+        setSurname(surname)
+  })
 
-export default Form;
+  const devUrl = import.meta.env.VITE_DEV_URL
+  const prodUrl = import.meta.env.VITE_PROD_URL
+
+ const handleSubmit = async (event) => {
+  event.preventDefault()
+
+  try {
+    await axios.post(`${devUrl}/api/reviews/create`, 
+      {
+        rating,
+        body,
+        first_name,
+        surname,
+        username,
+        tourid
+      },
+    )
+
+    newReview()
+
+  } catch (error) {
+    throw error
+  }
+};
+
+const stars = Array(5).fill(0).map((_, i) => (
+  <FaStar 
+    className={style.star}
+    key={i}
+    color={i < rating ? "#ffc107" : "#e4e5e9"}
+    size={20}
+    onClick={() => setRating(i + 1)}
+  />
+))
+
+
+  return (
+    <form onSubmit={handleSubmit} className={style.writeReview}>
+      <h2>Write a review:</h2>
+      <div className={style.rating}>
+        {stars}
+      </div>
+      <textarea
+        name="body"
+        value={body}
+        onChange={(e) => setBody(e.target.value)}
+      />
+      <button type="submit" className={style.submitBtn}>Submit</button>
+    </form>
+  );
+};
+
+export default ReviewForm;

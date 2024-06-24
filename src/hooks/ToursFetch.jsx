@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const fetchSingleTour = (id) => {
+const fetchSingleTour = () => {
 
   const [data, setData] = useState([])
   const [error, setError] = useState(null)
@@ -17,21 +17,18 @@ const fetchSingleTour = (id) => {
       try {
 
         const res = await axios.get(
-          `${devUrl}/api/tours/1?populate[media]=true&populate[display_picture]=true`,
+          `${devUrl}/api/tours?populate[media]=true&populate[display_picture]=true&`,
           {
             headers: {
               Authorization: `Bearer ${apiToken}`,
             },
           }
-        )
+        );
         setData(res.data.data)
         setLoading(false)
-
       } catch (error) {
-
         setError(error)
         setLoading(false)
-
       }
     }
 

@@ -222,6 +222,10 @@
       max-width: 400px;
     }
 
+    .thirdSection {
+      flex-direction: column;
+    }
+
     .reviewSlider {
       max-width: 350px;
     }

@@ -1,10 +1,13 @@
 import { FaStar } from 'react-icons/fa'
-import style from "./TourCard.module.css"
+import style from "./HomeCard.module.css"
 import { Link } from 'react-router-dom'
 import fetchReviews from "../../hooks/ReviewsFetch"
+import { userData } from '../../Helpers'
 
 const TourCard = ({ tour, tourId }) => {
 
+  const devUrl = import.meta.env.VITE_DEV_URL
+  const prodUrl = import.meta.env.VITE_PROD_URL
   
   const { reviews } = fetchReviews(tourId)
 
@@ -22,12 +25,9 @@ const TourCard = ({ tour, tourId }) => {
 
   const calculateAverageRating = (reviews) => {
     if (!reviews || reviews.length === 0) return 0;
-    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0)
+    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
     return totalRating / reviews.length;
   }
-
-  const devUrl = import.meta.env.VITE_DEV_URL
-  const prodUrl = import.meta.env.VITE_PROD_URL
 
   return (
     <article className={style.card} key={tour.id} >
@@ -43,7 +43,7 @@ const TourCard = ({ tour, tourId }) => {
       </div>
       <span className={style.totalReviews}>{`(${reviews.length})`}</span>
       <button className={style.cardButton}>
-        <Link className={style.cardLink} to={`tour/${tour.id}`}>Details</Link>
+        <Link className={style.cardLink} to={`/tours/tour/${tour.id}`}>Details</Link>
       </button>
     </article>
   );

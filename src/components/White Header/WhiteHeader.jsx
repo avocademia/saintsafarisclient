@@ -18,19 +18,11 @@ const WhiteHeader = () => {
             <Link className={style.whiteNavItem} to="/tours">Tours</Link>
             <Link className={style.whiteNavItem} to="/about">About Us</Link>
         <div className={style.buttonsContainer}>
-                <button>
-                    <FaPhone className={style.whiteHeaderButton}/>
-                </button>
-                <button>
-                    <FaWhatsapp className={style.whiteHeaderButton}/>
-                </button>
-                <button>
-                    <FaInstagram className={style.whiteHeaderButton}/>
-                </button >
-                <button>
-                    <FaUser className={style.whiteHeaderButton}/>
-                </button>   
-            </div>
+            <Link to="/contact"><FaPhone className={style.whiteHeaderButton}/></Link>
+            <a href="https://wa.me/254755487271" target="_blank"><FaWhatsapp className={style.whiteHeaderButton}/></a>
+            <a href="https://www.instagram.com/saintsafaris" target="_blank"><FaInstagram className={style.whiteHeaderButton}/></a>
+            <Link to="/userdash"><FaUser className={style.whiteHeaderButton}/></Link>
+        </div>
             <button className={style.hamburgerButton}>
                 <FaTimes onClick={showNavBar} className={style.activeHamburger}/>
             </button >

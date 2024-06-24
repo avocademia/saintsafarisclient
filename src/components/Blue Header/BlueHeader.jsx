@@ -18,24 +18,16 @@ const BlueHeader = () => {
             <Link className={style.blueNavItem} to="/tours">Tours</Link>
             <Link className={style.blueNavItem} to="/about">About Us</Link>
             <div className={style.buttonsContainer}>
-                <button>
-                    <FaPhone className={style.blueHeaderButton}/>
-                </button>
-                <button>
-                    <FaWhatsapp className={style.blueHeaderButton}/>
-                </button>
-                <button>
-                    <FaInstagram className={style.blueHeaderButton}/>
-                </button >
-                <button>
-                    <FaUser className={style.blueHeaderButton}/>
-                </button>   
+                <Link to="/contact"><FaPhone className={style.blueHeaderButton}></FaPhone></Link>
+                <a href="https://wa.me/254755487271" target="_blank"><FaWhatsapp className={style.blueHeaderButton}/></a>
+                <a href="https://www.instagram.com/saintsafaris" target="_blank"><FaInstagram className={style.blueHeaderButton}/></a>
+                <Link to ="/userdash"><FaUser className={style.blueHeaderButton}/></Link>
             </div>
             <button className={style.hamburgerButton}>
                 <FaTimes onClick={showNavBar} className={style.activeHamburger}/>
             </button >
         </nav>
-        <button className="hamburgerButton">
+        <button className={style.hamburgerButton}>
                 <FaBars onClick={showNavBar} className={style.blueHamburger}/>
         </button >
     </header>

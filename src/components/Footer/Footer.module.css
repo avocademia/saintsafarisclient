@@ -8,16 +8,9 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    column-gap: 30px;
   }
   
- .icons {
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 30px;
-    color: #f0f0f0;
-  }
   
   .footerPages {
     min-height: 20px;
@@ -26,7 +19,13 @@ footer {
     align-items: center;
   }
   
-  .footerBtn {
+  .footerBtns {
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 30px;
+    fill: #f0f0f0;
     border: none;
     background-color: transparent;
     Width: 50px;
@@ -37,7 +36,7 @@ footer {
     justify-content: center;
   }
   
-  .footerBtn:hover {
+  .footerBtns:hover {
     transform: scale(1.2);
   }
   

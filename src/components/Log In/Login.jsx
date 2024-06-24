@@ -2,8 +2,8 @@ import styled from "styled-components"
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { toast } from 'react-toastify';
-import { storeUser } from "../../Helpers";
+import { toast } from 'react-toastify'
+import { storeUser } from "../../Helpers"
 
 const LogInForm = styled.form`
   display: flex;
@@ -40,6 +40,7 @@ const Button = styled.button`
   border: none;
   background-color: #00072d;
   transition: 0.3s ease;
+  color: #f0f0f0;
 
   &:hover {
     background-color: #1b1b1b;
@@ -65,9 +66,12 @@ const Login = () => {
     }) )
   }
 
+  const devUrl = import.meta.env.VITE_DEV_URL
+  const prodUrl = import.meta.env.VITE_PROD_URL
+
   const handleLogIn = async (event) => {
     event.preventDefault(); 
-    const url = "http://localhost:1337/api/auth/local"
+    const url = `${devUrl}/api/auth/local`
     try {
 
       if (user.identifier && user.password) {
@@ -85,7 +89,7 @@ const Login = () => {
           }
       }
     } catch (error) {
-      toast.error(error.message, {
+      toast("An error occured please try again later", {
         hideProgressBar: true,
       })
     }

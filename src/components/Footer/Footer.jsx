@@ -6,18 +6,10 @@ const Footer = () => {
   return (
     <footer> 
          <div className={style.footerIcons}> 
-                 <button className={style.footerBtn}>
-                   <Link to="/contact"><FaPhone className={style.icons}/></Link>
-                 </button>
-                 <button className={style.footerBtn}>
-                    <a href="" target='_blank'><FaWhatsapp className={style.icons}/></a>
-                 </button>
-                 <button className={style.footerBtn}>
-                    <a href="https://www.instagram.com" target='_blank'><FaInstagram className={style.icons}/></a> 
-                 </button>
-                 <button className={style.footerBtn}>
-                    <a href="https://www.tiktok.com" target='_blank'><FaTiktok className={style.icons}/></a> 
-                 </button>
+                    <Link to="/contact"><FaPhone className={style.footerBtns}/></Link>
+                    <a href="https://wa.me/254755487271" target='_blank'><FaWhatsapp className={style.footerBtns}/></a>
+                    <a href="https://www.instagram.com/saintsafaris" target='_blank'><FaInstagram className={style.footerBtns}/></a> 
+                    <a href="https://www.tiktok.com" target='_blank'><FaTiktok className={style.footerBtns}/></a> 
          </div> 
          <div className={style.footerPages}> 
           <ul> 

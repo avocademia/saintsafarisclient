@@ -1,45 +1,41 @@
-/* Styling for checkboxes */
-.checkbox-container {
-    margin-bottom: 10px;
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
 }
 
-.checkbox-label {
-    position: relative;
-    padding-left: 30px;
-    cursor: pointer;
-    display: block;
-    font-size: 16px;
+.fieldContainer {
+    max-width: 400px;
+    margin: 20px 0 0 0;
 }
 
-.checkbox-label input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
+.fieldLabel {
+    font-size: 10px;
+    color: #1b1b1b;
+    display: flex;
+    flex-direction: column;
 }
 
-.checkbox-label::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+input {
+    border-radius: 5px;
     height: 25px;
-    width: 25px;
-    background-color: #fff;
-    border: 2px solid #007bff;
-    border-radius: 4px;
+    border: 1px  #1b1b1b solid;
 }
 
-.checkbox-label input:checked ~::before {
-    background-color: #007bff;
+form {
+    margin: 80px 0 20px 0;
 }
 
-.checkbox-label input:checked ~::after {
-    content: '\2713'; /* Checkmark symbol */
-    font-size: 16px;
-    color: #fff;
-    position: absolute;
-    top: 4px;
-    left: 7px;
+.submitBtn {
+    background-color: #233393;
+    color: #f0f0f0;
+    width: 100px;
+    height: 30px;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.submitBtn:hover {
+    background-color: #1b1b1b;
 }
