@@ -5,9 +5,10 @@ const ReviewsFetch = (tourId) => {
 
   const devUrl = import.meta.env.VITE_DEV_URL
   const prodUrl = import.meta.env.VITE_PROD_URL
+  const environment = import.meta.env.NODE_ENV
 
     const [reviews, setReviews] = useState([])
-    const url = `${devUrl}/api/get-reviews-by-id/${tourId}`
+    const url = `${environment === 'production'? prodUrl : devUrl}/api/get-reviews-by-id/${tourId}`
 
     useEffect(() => {
 

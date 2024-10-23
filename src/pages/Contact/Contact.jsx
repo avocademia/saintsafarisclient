@@ -81,14 +81,14 @@ const Contact = () => {
                         </div>
                     </div>
                 </a>
-                <a href="mailto:customercare@saintsafaris.com">
+                <a href="mailto:mail@saintsafaris.com">
                     <div className={style.contactOption}>
                         <div className={style.iconHolder}>
                             <FaEnvelope className={style.icon}/>
                         </div>
                         <div className={style.textHolder}>
                             <h4>Mail</h4>
-                            <span>customercare@saintsafaris.com</span>
+                            <span>mail@saintsafaris.com</span>
                         </div>
                     </div>
                 </a>
@@ -139,6 +139,13 @@ const Contact = () => {
                         <FaEnvelope className={style.icon2}/>
                 </a>
             </div>
+            <article className={style.physicalAddress}>
+                <h3>Physical Address</h3>
+                <p>Kisumu Ports (Next to Marine School)</p>
+                <p>New Station Road</p>
+                <p>House No. B28</p>
+                <p>P.O. Box 1288, 50300</p>
+        </article>
         </section> 
         <Footer/>
     </main>

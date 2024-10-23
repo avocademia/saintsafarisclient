@@ -7,6 +7,7 @@ const useSubmitReview = () => {
 
         const devUrl = import.meta.env.VITE_DEV_URL
         const prodUrl = import.meta.env.VITE_PROD_URL
+        const environment = import.meta.env.NODE_ENV
         
         try {
             if (!accessToken) {
@@ -16,7 +17,7 @@ const useSubmitReview = () => {
             }
             const tour = tourTitle
             const response = await axios.post(
-                `${devKey}/api/reviews`,
+                `${environment === 'production'? prodUrl : devUrl}/api/reviews`,
                 {
                     ...review,
                     tour: tour 

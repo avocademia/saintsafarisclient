@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react'
 
 const useAccessToken = () => {
@@ -6,11 +5,12 @@ const useAccessToken = () => {
  
   const devUrl = import.meta.env.VITE_DEV_URL
   const prodUrl = import.meta.env.VITE_PROD_URL
+  const environment = import.meta.env.NODE_ENV
 
   useEffect(() => {
     const fetchAccessToken = async () => {
       try {
-        const response = await fetch(`${prodUrl}/get-user-token`)
+        const response = await fetch(`${environment === 'production'? prodUrl : devUrl}/get-user-token`)
         if (response.ok) {
           const data = await response.json()
           setAccessToken(data.accessToken)

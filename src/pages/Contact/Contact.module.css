@@ -169,3 +169,7 @@
 
 
     }
+
+    .physicalAddress {
+      width: fit-content;
+    }

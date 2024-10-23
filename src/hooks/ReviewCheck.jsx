@@ -8,6 +8,7 @@ const useReviewCheck = (id) => {
 
   const devUrl = import.meta.env.VITE_DEV_URL
   const prodUrl = import.meta.env.VITE_PROD_URL
+  const environment = import.meta.env.NODE_ENV
   
   useEffect(() => {
     const fetchUserReviews = async () => {
@@ -15,7 +16,7 @@ const useReviewCheck = (id) => {
 
         if (username) {
 
-          const response = await axios.get(`${devUrl}/api/reviews-by-tourid-username/${id}/${username}`);
+          const response = await axios.get(`${environment === 'production'? prodUrl : devUrl}/api/reviews-by-tourid-username/${id}/${username}`);
 
           if (response.data.length > 0) {
             setIsReviewAdded(true)

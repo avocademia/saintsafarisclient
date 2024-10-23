@@ -16,7 +16,6 @@ const UserDashboard = () => {
       </button> : <button className={style.logOutBtn} onClick={handleLogout}>
         <Link to="/">Log Out</Link>
       </button>}
-      
     </section>
   )
 }

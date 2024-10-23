@@ -13,11 +13,12 @@ const fetchSingleTour = (id) => {
       const devUrl = import.meta.env.VITE_DEV_URL
       const prodUrl = import.meta.env.VITE_PROD_URL
       const apiToken = import.meta.env.VITE_API_TOKEN
+      const environment = import.meta.env.NODE_ENV
 
       try {
 
         const res = await axios.get(
-          `${devUrl}/api/tours/1?populate[media]=true&populate[display_picture]=true`,
+          `${environment === 'production'? prodUrl : devUrl}/api/tours/1?populate[media]=true&populate[display_picture]=true`,
           {
             headers: {
               Authorization: `Bearer ${apiToken}`,
