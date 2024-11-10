@@ -1,14 +1,6 @@
-import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const fetchSingleTour = (id) => {
-
-  const [data, setData] = useState([])
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchData = async () => {
+const fetchSingleTour = async (id) => {
 
       const devUrl = import.meta.env.VITE_DEV_URL
       const prodUrl = import.meta.env.VITE_PROD_URL
@@ -25,21 +17,11 @@ const fetchSingleTour = (id) => {
             },
           }
         )
-        setData(res.data.data)
-        setLoading(false)
+        return res.data
 
       } catch (error) {
-
-        setError(error)
-        setLoading(false)
-
+        throw error
       }
-    }
-
-    fetchData()
-  }, [])
-
-  return { data, error, loading }
-};
+}
 
 export default fetchSingleTour

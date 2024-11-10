@@ -4,9 +4,7 @@ import { FaStar } from 'react-icons/fa'
 import { userData } from '../../Helpers'
 import style from "./Form.module.css"
 
-
-
-const ReviewForm = ({tourId, newReview}) => {
+const ReviewForm = ({tourId, reviewChecker}) => {
   const [rating, setRating] = useState(0)
   const [body, setBody] = useState('')
   const [first_name, setFirstName] = useState('')
@@ -28,7 +26,7 @@ const ReviewForm = ({tourId, newReview}) => {
   event.preventDefault()
 
   try {
-    await axios.post(`${devUrl}/api/reviews/create`, 
+    await axios.post(`${process.env.NODE_ENV === 'production'? prodUrl : devUrl}/api/reviews/create`, 
       {
         rating,
         body,
@@ -38,9 +36,8 @@ const ReviewForm = ({tourId, newReview}) => {
         tourid
       },
     )
-
-    newReview()
-
+    reviewChecker()
+    
   } catch (error) {
     throw error
   }
