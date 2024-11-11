@@ -5,13 +5,28 @@ import { Link } from "react-router-dom"
 import {userData} from "../../Helpers"
 import fetchTours from "../../hooks/ToursFetch"
 import HomeCard from "../../components/HomeCard/HomeCard"
+import { toast } from "react-toastify"
+import { useState,useEffect } from "react"
 
 const Home = () => {
-  const {firstName} = userData() || {}
-  const {data, error, loading} = fetchTours()
+  
+    const [tours, setTours] = useState([])
+    const {firstName} = userData() || {}
+
+    useEffect(()=> {
+      const getTours = async() => {
+          try {
+              const data = await fetchTours()
+              setTours(data)
+          } catch (error) {
+              toast('An error occured fetching tours')
+          }
+      }
+        getTours()
+    }, [firstName])
+  
   return (
     <main className={style.homePage}>
-      
       <WhiteHeader/>
       <section className={style.heroSection}>
           {!firstName? <h1>Welcome</h1> : <h1>Welcome, {firstName} </h1>}
@@ -26,21 +41,14 @@ const Home = () => {
       <section className={style.toursSection}>
         <h1>Popular Tours</h1>
         <div className={style.cardContainer}>
-          {data.slice(0, 3).map((tour) => (
+          {tours.slice(0, 3).map((tour) => (
             <HomeCard key={tour.id} tour={tour} tourId={tour.id} />
           ))}
         </div>
       </section>
       <Footer className={style.homeFooter}/>
     </main>
-  )
-    
-    
+  )   
 }
-export default Home
 
-/*
- 
-      
-      
-      */
+export default Home

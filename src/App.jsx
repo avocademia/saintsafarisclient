@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import Home from "./pages/Home/Home"
 import SignupSignin from "./pages/User Auth/SignunSignin"
 import Tours from './pages/Tours/Tours'
@@ -15,6 +15,7 @@ function App() {
 
   return (
     <BrowserRouter>
+        <ToastContainer style={{zIndex: 100}}/>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
           <Route path="/userauth" element={<SignupSignin/>}/>
@@ -27,7 +28,6 @@ function App() {
           <Route path="/tourbooking" element={<TourBooking/>}/>
           <Route path="/userdash" element={<UserDashboard/>}/>
         </Routes>
-        <ToastContainer/>
    </BrowserRouter> 
   )
 }
