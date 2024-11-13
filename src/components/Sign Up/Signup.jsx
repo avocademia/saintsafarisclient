@@ -238,7 +238,7 @@ const prodUrl = import.meta.env.VITE_PROD_URL
         />
       </FieldContainer>
       <FieldContainer>
-        <Label htmlFor="dob">password</Label>
+        <Label htmlFor="dob">Date Of Birth</Label>
         <LongInput 
         type='date' 
         name="dob" 

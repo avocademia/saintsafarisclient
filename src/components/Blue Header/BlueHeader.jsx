@@ -17,6 +17,7 @@ const BlueHeader = () => {
             <Link className={style.blueNavItem} to="/">Home</Link>
             <Link className={style.blueNavItem} to="/tours">Tours</Link>
             <Link className={style.blueNavItem} to="/about">About Us</Link>
+            <Link className={style.blueNavItem} to="/tour">Accommodation</Link>
             <div className={style.buttonsContainer}>
                 <Link to="/contact"><FaPhone className={style.blueHeaderButton}></FaPhone></Link>
                 <a href="https://wa.me/254755487271" target="_blank"><FaWhatsapp className={style.blueHeaderButton}/></a>
