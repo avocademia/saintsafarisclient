@@ -1,14 +1,28 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from "axios"
 import fetchTours from "../../hooks/ToursFetch"
 import style from "./TourBooking.module.css"
 import Header from "../../components/Blue Header/BlueHeader"
 import Footer from '../../components/Footer/Footer'
 import { toast } from 'react-toastify'
+import {userData} from '../../Helpers'
 
 const BookingForm = () => {
 
-  const { data, error, loading } = fetchTours()
+    const [tours, setTours] = useState([])
+    const {firstName} = userData() || {}
+
+    useEffect(()=> {
+      const getTours = async() => {
+          try {
+              const data = await fetchTours()
+              setTours(data)
+          } catch (error) {
+              toast('An error occured fetching tours')
+          }
+      }
+        getTours()
+    }, [firstName])
 
   const [formData, setFormData] = useState({
     tour: '',
@@ -32,13 +46,11 @@ const BookingForm = () => {
 
     const devUrl = import.meta.env.VITE_DEV_URL
     const prodUrl = import.meta.env.VITE_PROD_URL
+    const environment = import.meta.env.NODE_ENV
 
     e.preventDefault()
     try {
-      const response = await axios.post(`${devUrl}/api/tour-bookings`, formData);
-      if (error) {
-        throw new Error('Failed to submit booking form.')
-      }
+      const response = await axios.post(`${environment ==='production'? prodUrl:devUrl}/api/tour-bookings`, formData);
 
       toast('Booking Successfully sent! We will contact you soon.', {
         hideProgressBar: true,
@@ -56,16 +68,16 @@ const BookingForm = () => {
         travel_date: '',
         message: '',
       });
-
+      console.log(response.data)
       return response.data
     } catch (error) {
       toast('Failed to submit booking form. Try Again Later', {
         hideProgressBar: true,
       })
+      console.log(error)
       throw error
     }
   }
-
 
   return (
     <section className={style.page}>
@@ -76,7 +88,7 @@ const BookingForm = () => {
                     Tour:
                     <select name="tour" value={formData.tour} onChange={handleInputChange}>
                         <option value="">Select Tour</option>
-                        {data
+                        {tours
                             .slice() // Create a shallow copy of the array
                             .sort((a, b) => a.attributes.title.localeCompare(b.attributes.title)) // Sort by title
                             .map((tour) => (

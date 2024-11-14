@@ -3,7 +3,7 @@ import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { toast } from 'react-toastify'
-import { storeUser } from "../../Helpers"
+import { storeToken, storeUser } from "../../Helpers"
 
 const LogInForm = styled.form`
   display: flex;
@@ -46,7 +46,6 @@ const Button = styled.button`
     background-color: #1b1b1b;
   }
 `
-
 const RememberMe = styled.a`
   cursor: pointer;
 `
@@ -68,27 +67,29 @@ const Login = () => {
 
   const devUrl = import.meta.env.VITE_DEV_URL
   const prodUrl = import.meta.env.VITE_PROD_URL
+  const environment = import.meta.env.NODE_ENV
 
   const handleLogIn = async (event) => {
     event.preventDefault(); 
-    const url = `${devUrl}/api/auth/local`
+    const url = `${environment === 'production'? prodUrl:devUrl}/api/auth/local`
     try {
 
       if (user.identifier && user.password) {
-          const res = await axios.post(url, user)
-
+        
+          const res = await axios.post(url, user, {withCredentials: true})
           const {data} = res
-
           if (data.jwt && data.user) {
             toast.success("logged In succesfully",{
               hideProgressBar: true,
             })
             setUser(initialUser)
+            storeUser(data.user)
+            storeToken(data.jwt)
             navigate("/")
-            storeUser(data)
           }
       }
     } catch (error) {
+      console.log(error)
       toast("An error occured please try again later", {
         hideProgressBar: true,
       })
@@ -105,7 +106,7 @@ const Login = () => {
               placeholder="email/username" 
               onChange={handleChange} 
               value={user.identifier}
-              />
+            />
         </FieldContainer>
         <FieldContainer>
             <Label htmlFor="pswrd">password</Label>

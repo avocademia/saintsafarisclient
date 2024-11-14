@@ -26,9 +26,10 @@ const useSubmitReview = () => {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
+                    withCredentials:true
                 }
             )
-
+            return response
         } catch (error) {
             throw new Error('Error submitting review:', error)
         }

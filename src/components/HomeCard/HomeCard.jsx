@@ -16,11 +16,12 @@ const TourCard = ({ tour, tourId }) => {
         const data = await fetchReviews(tourId)
         setReviews(data)
       } catch (error) {
+        console.log(error)
         throw error
       }
     }
     getReviews()
-  })
+  }, [])
 
   const renderStars = (rating) => {
     const stars = [];
@@ -41,7 +42,8 @@ const TourCard = ({ tour, tourId }) => {
   }
 
   return (
-    <article className={style.card} key={tour.id} >
+    <Link key={tour.id} className={style.cardLink} to={`/tours/tour/${tour.id}`}>
+    <article className={style.card}  >
       <div className={style.imageContainer} key={tour.id}>
         <img src={`${import.meta.env.NODE_ENV === 'production'? prodUrl : devUrl}${tour.attributes.display_picture.data.attributes.url}`} alt={tour.attributes.title}/>
       </div>
@@ -54,9 +56,10 @@ const TourCard = ({ tour, tourId }) => {
       </div>
       <span className={style.totalReviews}>{`(${reviews.length})`}</span>
       <button className={style.cardButton}>
-        <Link className={style.cardLink} to={`/tours/tour/${tour.id}`}>Details</Link>
+        Details
       </button>
     </article>
+    </Link>
   );
 };
 

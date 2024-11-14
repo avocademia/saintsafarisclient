@@ -20,7 +20,7 @@ const Tours = () => {
         }
     }
       getTours()
-  }, [firstName])
+  }, [])
 
   return (
     <main className={style.toursPage}>

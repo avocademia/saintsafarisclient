@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { FaStar } from 'react-icons/fa'
-import { userData } from '../../Helpers'
+import { userData} from '../../Helpers'
 import style from "./Form.module.css"
+import authCheck from '../../hooks/AuthCheck';
 
 const ReviewForm = ({tourId, reviewChecker}) => {
   const [rating, setRating] = useState(0)
@@ -11,13 +12,14 @@ const ReviewForm = ({tourId, reviewChecker}) => {
   const [surname, setSurname] = useState('')
   const [username, setUsername] = useState('')
   const tourid = parseInt(tourId, 10)
+  const {accessToken} = userData()
 
   useEffect(() => {
         const { firstName, username, surname } = userData();
         setFirstName(firstName)
         setUsername(username)
         setSurname(surname)
-  })
+  },[])
 
   const devUrl = import.meta.env.VITE_DEV_URL
   const prodUrl = import.meta.env.VITE_PROD_URL
@@ -26,22 +28,26 @@ const ReviewForm = ({tourId, reviewChecker}) => {
   event.preventDefault()
 
   try {
-    await axios.post(`${process.env.NODE_ENV === 'production'? prodUrl : devUrl}/api/reviews/create`, 
-      {
-        rating,
-        body,
-        first_name,
-        surname,
-        username,
-        tourid
-      },
-    )
+    const authorized = await authCheck()
+    console.log(authorized)
+    if (authorized === true) {
+      axios.post(`${process.env.NODE_ENV === 'production'? prodUrl : devUrl}/api/reviews/create`, 
+        {
+          rating,
+          body,
+          first_name,
+          surname,
+          username,
+          tourid
+        },
+      )
+    }
     reviewChecker()
     
   } catch (error) {
     throw error
   }
-};
+}
 
 const stars = Array(5).fill(0).map((_, i) => (
   <FaStar 

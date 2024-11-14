@@ -2,7 +2,7 @@ import WhiteHeader from "../../components/White Header/WhiteHeader"
 import Footer from "../../components/Footer/Footer"
 import style from './Home.module.css'
 import { Link } from "react-router-dom"
-import {userData} from "../../Helpers"
+import {clearUserData, userData} from "../../Helpers"
 import fetchTours from "../../hooks/ToursFetch"
 import HomeCard from "../../components/HomeCard/HomeCard"
 import { toast } from "react-toastify"
@@ -12,6 +12,7 @@ const Home = () => {
   
     const [tours, setTours] = useState([])
     const {firstName} = userData() || {}
+
 
     useEffect(()=> {
       const getTours = async() => {
@@ -23,7 +24,7 @@ const Home = () => {
           }
       }
         getTours()
-    }, [firstName])
+    }, [])
   
   return (
     <main className={style.homePage}>
