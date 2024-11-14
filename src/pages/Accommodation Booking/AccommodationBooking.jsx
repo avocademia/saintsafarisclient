@@ -1,10 +1,8 @@
 // src/components/BookingForm.jsx
-import React, { useState } from 'react';
-import './BookingForm.css';
-import { useState } from 'react'
-import style from "./AccommodationBooking.module.css"
-import Header from "../../components/Blue Header/BlueHeader"
-import Footer from '../../components/Footer/Footer'
+import { useState } from 'react';
+import "./AccommodationBooking.module.css";
+import Header from "../../components/Blue Header/BlueHeader";
+import Footer from '../../components/Footer/Footer';
 
 const BookingForm = () => {
     const [formData, setFormData] = useState({
