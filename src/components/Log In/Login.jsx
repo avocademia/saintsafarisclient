@@ -1,9 +1,8 @@
 import styled from "styled-components"
 import { useState } from "react"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { toast } from 'react-toastify'
-import { storeToken, storeUser } from "../../Helpers"
+import login from "../../hooks/login"
+import { ToastContainer } from "react-toastify"
 
 const LogInForm = styled.form`
   display: flex;
@@ -50,81 +49,61 @@ const RememberMe = styled.a`
   cursor: pointer;
 `
 
-const initialUser = {identifier: "",password: "" }
 const Login = () => {
-  
-  
-  const [user, setUser] = useState(initialUser)
-  const navigate = useNavigate()
-  
-  const handleChange = (event) => {
-    const {name, value} = event.target
-    setUser((currentUser) => ({
-      ...currentUser,
-      [name]: value,
-    }) )
-  }
 
-  const devUrl = import.meta.env.VITE_DEV_URL
-  const prodUrl = import.meta.env.VITE_PROD_URL
-  const environment = import.meta.env.NODE_ENV
-
-  const handleLogIn = async (event) => {
-    event.preventDefault(); 
-    const url = `${environment === 'production'? prodUrl:devUrl}/api/auth/local`
-    try {
-
-      if (user.identifier && user.password) {
-        
-          const res = await axios.post(url, user, {withCredentials: true})
-          const {data} = res
-          if (data.jwt && data.user) {
-            toast.success("logged In succesfully",{
-              hideProgressBar: true,
-            })
-            setUser(initialUser)
-            storeUser(data.user)
-            storeToken(data.jwt)
-            navigate("/")
-          }
-      }
-    } catch (error) {
-      console.log(error)
-      toast("An error occured please try again later", {
-        hideProgressBar: true,
-      })
+    const initialUser = {identifier: "",password: "" }
+    const [user, setUser] = useState(initialUser)
+    const navigate = useNavigate()
+    
+    const handleChange = (event) => {
+      const {name, value} = event.target
+      setUser((currentUser) => ({
+        ...currentUser,
+        [name]: value,
+      }) )
     }
-  }
-  return (
-    <LogInForm method="POST">
-        <FieldContainer>
-            <Label htmlFor="email/username">username/email</Label>
-            <Input 
-              type="email" 
-              name="identifier"
-              id="email/username" 
-              placeholder="email/username" 
-              onChange={handleChange} 
-              value={user.identifier}
-            />
-        </FieldContainer>
-        <FieldContainer>
-            <Label htmlFor="pswrd">password</Label>
-            <Input
-             id="pswrd"
-             type="password" 
-             name="password" 
-             placeholder="password"
-             onChange={handleChange}
-             value={user.password}
-             />
-        </FieldContainer>
-        <FieldContainer style={{marginTop: '20px'}}>
-          <Button type="button" onClick={handleLogIn}>Log In</Button>
-        </FieldContainer>
-    </LogInForm>
-  )
-}
 
+    const handleLogIn = async (event) => {
+        event.preventDefault(); 
+        try {
+            await login(user)
+            setUser(initialUser)
+            navigate('/')
+        } catch (error) {
+            setUser(initialUser)
+        }
+    }
+
+    return (
+      <LogInForm method="POST">
+          <ToastContainer/>
+          <FieldContainer>
+              <Label htmlFor="email/username">username/email</Label>
+              <Input 
+                type="email" 
+                name="identifier"
+                id="email/username" 
+                placeholder="email/username" 
+                onChange={handleChange} 
+                value={user.identifier}
+              />
+          </FieldContainer>
+          <FieldContainer>
+              <Label htmlFor="pswrd">password</Label>
+              <Input
+              id="pswrd"
+              type="password" 
+              name="password" 
+              placeholder="password"
+              onChange={handleChange}
+              value={user.password}
+              />
+          </FieldContainer>
+          <FieldContainer style={{marginTop: '20px'}}>
+            <Button type="button" onClick={handleLogIn}>Log In</Button>
+          </FieldContainer>
+      </LogInForm>
+    )
+}
 
 export default Login

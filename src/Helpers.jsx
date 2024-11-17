@@ -1,21 +1,30 @@
 export const storeUser = (user) => {
-  localStorage.setItem("user", JSON.stringify({
-      firstName: user.first_name,
-      middleName: user.middle_name,
-      surname: user.surname,
-      username: user.username,
-      userId: user.id,
-  }))
+
+    try {
+        localStorage.setItem("user", JSON.stringify({
+            firstName: user.first_name,
+            middleName: user.middle_name,
+            surname: user.surname,
+            username: user.username,
+            userId: user.id,
+        }))
+    } catch (error) {
+        throw error
+    }
 }
 
 export const storeToken = (token) => {
-    localStorage.setItem("accessToken", JSON.stringify(token))
+    try {
+        localStorage.setItem("accessToken", JSON.stringify(token))
+    } catch (error) {
+        throw error
+    }
 }
 
 export const userData = () => {
+
     const stringifiedToken = localStorage.getItem('accessToken')
     const stringifiedUser = localStorage.getItem("user")
-    
     let user = {}
     let token
       
@@ -39,7 +48,12 @@ export const userData = () => {
 }
   
 export const clearUserData = () => {
-    localStorage.removeItem("user")
-    localStorage.removeItem('accessToken')
+
+    try {
+        localStorage.removeItem("user")
+        localStorage.removeItem('accessToken')
+    } catch (error) {
+        throw error
+    }
 }
   

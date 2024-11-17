@@ -1,18 +1,18 @@
-import style from "./UserDashboard.module.css";
-import { userData, clearUserData } from "../../Helpers";
-import { Link, Navigate } from "react-router-dom";
-import logout from "../../hooks/logout";
-import { useState } from "react";
+import style from "./UserDashboard.module.css"
+import { userData, clearUserData } from "../../Helpers"
+import { Link, Navigate } from "react-router-dom"
+import { useState } from "react"
+import logout from "../../hooks/logout"
 
 const UserDashboard = () => {
-  const { firstName } = userData() || {};
-  const [redirect, setRedirect] = useState(false);
+  const { firstName } = userData() || {}
+  const [redirect, setRedirect] = useState(false)
 
   const handleLogout = () => {
-    logout();
-    clearUserData();
-    setRedirect(true);
-  };
+    logout()
+    clearUserData()
+    setRedirect(true)
+  }
 
   return (
     <section className={style.page}>
@@ -27,7 +27,7 @@ const UserDashboard = () => {
         </button>
       )}
     </section>
-  );
-};
+  )
+}
 
 export default UserDashboard;

@@ -2,7 +2,7 @@ import WhiteHeader from "../../components/White Header/WhiteHeader"
 import Footer from "../../components/Footer/Footer"
 import style from './Home.module.css'
 import { Link } from "react-router-dom"
-import {clearUserData, userData} from "../../Helpers"
+import {userData} from "../../Helpers"
 import fetchTours from "../../hooks/ToursFetch"
 import HomeCard from "../../components/HomeCard/HomeCard"
 import { toast } from "react-toastify"

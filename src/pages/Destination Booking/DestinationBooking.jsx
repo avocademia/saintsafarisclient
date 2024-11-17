@@ -3,4 +3,5 @@ const DestinationBooking = () => {
     <div>DestinationBooking</div>
   )
 }
+
 export default DestinationBooking

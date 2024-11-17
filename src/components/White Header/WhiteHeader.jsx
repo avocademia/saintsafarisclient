@@ -1,20 +1,20 @@
-import logoBlue from "../../assets/logoWhite.png";
-import { FaBars, FaTimes, FaWhatsapp, FaUser, FaInstagram, FaPhone, FaCaretDown } from "react-icons/fa";
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import style from "./WhiteHeader.module.css";
+import logoBlue from "../../assets/logoWhite.png"
+import { FaBars, FaTimes, FaWhatsapp, FaUser, FaInstagram, FaPhone, FaCaretDown } from "react-icons/fa"
+import { useRef, useState } from "react"
+import { Link } from "react-router-dom"
+import style from "./WhiteHeader.module.css"
 
 const WhiteHeader = () => {
-  const navRef = useRef();
-  const [isServicesOpen, setServicesOpen] = useState(false); // Track dropdown state for services
+  const navRef = useRef()
+  const [isServicesOpen, setServicesOpen] = useState(false)
 
   const showNavBar = () => {
-    navRef.current.classList.toggle(`${style.responsiveNav}`);
-  };
+    navRef.current.classList.toggle(`${style.responsiveNav}`)
+  }
 
   const toggleServicesDropdown = () => {
-    setServicesOpen(!isServicesOpen);
-  };
+    setServicesOpen(!isServicesOpen)
+  }
 
   return (
     <header className={style.whiteHeader}>
@@ -24,7 +24,6 @@ const WhiteHeader = () => {
         <Link className={style.whiteNavItem} to="/tours">Tours</Link>
         <Link className={style.whiteNavItem} to="/about">About Us</Link>
 
-        {/* Services Dropdown for Desktop */}
         <div className={style.dropdown}>
           <button
             className={style.whiteNavItem}
@@ -35,7 +34,7 @@ const WhiteHeader = () => {
           {isServicesOpen && (
             <div className={style.dropdownMenu}>
               <Link to="/flight-booking" className={style.dropdownItem}>Flight Booking</Link>
-              <Link to="/accommodation" className={style.dropdownItem}>Accommodation</Link>
+              <Link to="/accommodation-booking" className={style.dropdownItem}>Accommodation</Link>
             </div>
           )}
         </div>
@@ -47,13 +46,11 @@ const WhiteHeader = () => {
           <Link to="/userdash"><FaUser className={style.whiteHeaderButton} /></Link>
         </div>
 
-        {/* Hamburger Button */}
         <button className={style.hamburgerButton}>
           <FaTimes onClick={showNavBar} className={style.activeHamburger} />
         </button>
       </nav>
 
-      {/* Mobile Menu Button */}
       <button className={style.hamburgerButton}>
         <FaBars onClick={showNavBar} className={style.whiteHamburger} />
       </button>

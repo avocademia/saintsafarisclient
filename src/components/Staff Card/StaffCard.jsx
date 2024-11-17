@@ -4,8 +4,9 @@ const StaffCard = () => {
     const prodUrl = import.meta.env.VITE_PROD_URL
     const apiToken = import.meta.env.VITE_API_TOKEN
     
-  return (
-    <div>StaffCard</div>
-  )
+    return (
+        <div>StaffCard</div>
+    )
 }
+
 export default StaffCard

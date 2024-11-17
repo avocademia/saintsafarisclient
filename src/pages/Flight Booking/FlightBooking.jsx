@@ -1,107 +1,133 @@
-import { useState, useEffect } from 'react'
-import axios from "axios"
+import { useState, useEffect } from "react"
 import style from "./FlightBooking.module.css"
 import Header from "../../components/Blue Header/BlueHeader"
-import Footer from '../../components/Footer/Footer'
-import { toast } from 'react-toastify'
-import PhoneInput from 'react-phone-input-2';
-import countryList from 'react-select-country-list';
-import Select from 'react-select';
-import 'react-phone-input-2/lib/style.css';
+import Footer from "../../components/Footer/Footer"
+import { toast } from "react-toastify"
+import PhoneInput from "react-phone-input-2"
+import countryList from "react-select-country-list"
+import Select from "react-select"
+import "react-phone-input-2/lib/style.css"
+import flightBooking from "../../hooks/FlightBooking"
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
+import travellers from "../../hooks/Travellers"
+import multiCity from "../../hooks/MultiCity"
 
 const FlightBooking = () => {
-  
   const [formData, setFormData] = useState({
-    title: '',
-    full_name: '',
-    phone: '',
-    email: '',
+    title: "",
+    full_name: "",
+    phone: "",
+    email: "",
     adults: 0,
     children: 0,
     infants: 0,
-    travel_date: '',
-    city: '',
-    destination: '',
-    return: '',
-    return_date: '',
-    travelers: []
+    travel_date: "",
+    city: "",
+    destination: "",
+    return_date: "",
+    tripType: "",
+    numberOfCities: 0,
+    multiCityDestinations: [],
+    travelers: [],
+    visaAssistance: false,
   })
 
-  const countries = countryList().getData();
-
+  const [loading, setLoading] = useState(false)
+  const countries = countryList().getData()
   const handlePhoneChange = (phone) => {
-    setFormData({ ...formData, phone });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
+    setFormData({ ...formData, phone })
   }
 
-  
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    })
+  }
+
   const handleTripTypeChange = (e) => {
     const tripType = e.target.value;
     setFormData({
       ...formData,
       tripType,
-      return_date: '',
+      return_date: "",
       numberOfCities: 0,
       multiCityDestinations: [],
-      destination: tripType === 'one-way' ? '' : formData.destination
-    });
-  };
+      destination: tripType === "one-way" ? "" : formData.destination,
+    })
+  }
 
   const handleCityCountChange = (e) => {
     const count = parseInt(e.target.value) || 0;
     setFormData({
       ...formData,
       numberOfCities: count,
-      multiCityDestinations: Array.from({ length: count }, () => '')
-    });
-  };
+      multiCityDestinations: Array.from({ length: count }, () => ({
+        city: "",
+        date: "",
+      })),
+    })
+  }
 
-  const handleMultiCityChange = (index, e) => {
+  const handleMultiCityChange = (index, field, value) => {
     const updatedCities = [...formData.multiCityDestinations];
-    updatedCities[index] = e.target.value;
+    updatedCities[index] = {
+      ...updatedCities[index],
+      [field]: value,
+    }
     setFormData({ ...formData, multiCityDestinations: updatedCities });
-  };
+  }
+
+  const handleTravelerChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedTravelers = [...formData.travelers];
+    updatedTravelers[index][name] = value;
+    setFormData({ ...formData, travelers: updatedTravelers });
+  }
 
   const handleSubmit = async (e) => {
-    const devUrl = import.meta.env.VITE_DEV_URL
     e.preventDefault()
-    // Example of form submission logic
-    /*try {
-      const response = await axios.post(`${devUrl}/api/flight-bookings`, formData)
-      toast('Flight Booking Successfully sent! We will contact you soon.', {
-        hideProgressBar: true,
-      })
+    setLoading(true)
+
+    try {
+
+      const response = await flightBooking(formData)
+      if (response.bookingId) { 
+         const secondResponse = await travellers({travelers: formData.travelers,booking: response.bookingId})
+      }
+      if (formData.tripType === "multi-city") {
+        await multiCity({cities: formData.multiCityDestinations, booking: response.bookingId})
+      }
+      toast.success("Booking completed successfully!")
     } catch (error) {
-      toast('Failed to submit flight booking. Try Again Later', {
-        hideProgressBar: true,
-      })
-    }*/
+      console.log(error)
+      toast.error("There was an error with the booking. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
-    // Dynamically update travelers fields based on adults, children, and infants count
-    const totalTravelers = parseInt(formData.adults) + parseInt(formData.children) + parseInt(formData.infants)
+    const totalTravelers =
+      parseInt(formData.adults) +
+      parseInt(formData.children) +
+      parseInt(formData.infants);
+
     setFormData((prevFormData) => ({
       ...prevFormData,
       travelers: Array.from({ length: totalTravelers }, () => ({
-        title: '',
-        full_name: '',
-        identification_type: '',
-        identification_no: '',
-        nationality: ''
-      }))
-    }))
+        title: "",
+        full_name: "",
+        identification_type: "",
+        identification_no: "",
+        nationality: "",
+      })),
+    }));
   }, [formData.adults, formData.children, formData.infants])
 
-  const handleTravelerChange = (index, e) => {
-    const { name, value } = e.target
-    const updatedTravelers = [...formData.travelers]
-    updatedTravelers[index][name] = value
-    setFormData({ ...formData, travelers: updatedTravelers })
+  if (loading === true ){
+    return <LoadingSpinner/>
   }
 
   return (
@@ -196,27 +222,44 @@ const FlightBooking = () => {
                 </div>
             )}
 
-            {formData.tripType === 'multi-city' && (
-                <>
-                    <div className={style.fieldContainer}>
-                        <label>Number of Cities:
-                            <input type="number" name="numberOfCities" value={formData.numberOfCities} onChange={handleCityCountChange} />
-                        </label>
-                    </div>
-                    {Array.from({ length: formData.numberOfCities }, (_, i) => (
-                        <div key={i} className={style.fieldContainer}>
-                            <label>City {i + 1}:
-                                <input
-                                    type="text"
-                                    name={`city_${i}`}
-                                    value={formData.multiCityDestinations[i] || ''}
-                                    onChange={(e) => handleMultiCityChange(i, e)}
-                                />
-                            </label>
-                        </div>
-                    ))}
-                </>
-            )}
+{formData.tripType === 'multi-city' && (
+  <>
+    <div className={style.fieldContainer}>
+      <label>Number of Cities:
+        <input 
+          type="number" 
+          name="numberOfCities" 
+          value={formData.numberOfCities} 
+          onChange={handleCityCountChange} 
+        />
+      </label>
+    </div>
+    {Array.from({ length: formData.numberOfCities }, (_, i) => (
+      <div key={i} className={style.fieldContainer}>
+        <label>City {i + 1}:
+          <input
+            type="text"
+            name={`city_${i}`}
+            value={formData.multiCityDestinations[i]?.city || ''}
+            onChange={(e) => handleMultiCityChange(i, 'city', e.target.value)}
+          />
+        </label>
+        {/* Only render the "Date of departure" for cities except the last one */}
+        {i !== formData.numberOfCities - 1 && (
+          <label>Date of departure {i + 1}:
+            <input
+              type="date"
+              name={`date_${i}`}
+              value={formData.multiCityDestinations[i]?.date || ''}
+              onChange={(e) => handleMultiCityChange(i, 'date', e.target.value)}
+            />
+          </label>
+        )}
+      </div>
+    ))}
+  </>
+)}
+
 <h3>Traveller(s)'s Details</h3>
         {formData.travelers.map((traveler, index) => (
           <div key={index} className={style.travelerContainer}>
@@ -270,6 +313,18 @@ const FlightBooking = () => {
             </div>
           </div>
         ))}
+ <div className={style.fieldContainer}>
+          <label>
+            Do you require visa assistance?
+            <input
+              type="checkbox"
+              name="visaAssistance"
+              checked={formData.visaAssistance}
+              onChange={handleInputChange}
+            />
+          </label>
+        </div>
+
             <button className={style.submitBtn} type="submit">Submit</button>
         </form>
         <Footer/>

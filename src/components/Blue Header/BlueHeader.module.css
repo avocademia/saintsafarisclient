@@ -59,6 +59,60 @@ button {
     width: 100%;;
 }
 
+.dropdown {
+    position: relative;
+  }
+  
+  .dropdownMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #233393;
+    width: auto;
+    min-width: 150px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s 0.3s;
+  }
+  
+.dropdownMenu .dropdownItem {
+    padding: 10px 20px;
+    color: #f0f0f0;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropdownMenu .dropdownItem:hover {
+    background-color: #f0f0f0;
+    color: #233393;
+  }  
+  
+  .dropdown:hover .dropdownMenu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Smoothly slides in */
+  }
+  
+  .dropdownArrow {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+  }
+  
+  .dropdown.open .dropdownArrow {
+    transform: rotate(180deg);
+  }
+  
+
 .buttonsContainer {
     display: flex;
     flex-direction: row;

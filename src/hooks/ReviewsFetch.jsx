@@ -2,6 +2,8 @@ import axios from "axios"
 
 const ReviewsFetch = async (tourId) => {
 
+    console.log('tour id:',tourId)
+
     const devUrl = import.meta.env.VITE_DEV_URL
     const prodUrl = import.meta.env.VITE_PROD_URL
     const environment = import.meta.env.NODE_ENV
@@ -14,4 +16,5 @@ const ReviewsFetch = async (tourId) => {
         throw error
     }
 }
+
 export default ReviewsFetch

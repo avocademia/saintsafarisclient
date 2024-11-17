@@ -4,6 +4,7 @@ import style from "./Contact.module.css"
 import { FaPhone, FaWhatsapp, FaEnvelope } from "react-icons/fa"
 import { useState } from "react"
 import {sendQuery} from '../../hooks/sendQuery'
+import { ToastContainer, toast } from "react-toastify"
 
 const Contact = () => {
 
@@ -26,6 +27,9 @@ const Contact = () => {
         e.preventDefault()
         try {
             await sendQuery(data)
+            toast('query successfully sent we will get back to you shortly', {
+                hideProgressBar: true
+            })
         } catch (error) {
             throw error
         }     
@@ -33,6 +37,7 @@ const Contact = () => {
 
     return (
         <main className={style.page}>
+            <ToastContainer/>
             <BlueHeader/>
             <section className={style.containerOne}> 
                 <article className={style.contactsOne}>
