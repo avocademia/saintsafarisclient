@@ -1,8 +1,8 @@
-import styled from "styled-components"
-import { useState } from "react"
-import { ToastContainer} from 'react-toastify'
-import signup from "../../hooks/signup"
-import { useNavigate } from "react-router-dom"
+import styled from "styled-components";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import signup from "../../hooks/signup";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = styled.form`
   display: flex;
@@ -22,7 +22,7 @@ const ShortInput = styled.input`
   width: 130px;
   font-size: 13px;
   height: 25px;
-  font-family: 'poppins', sans-serif;
+  font-family: "poppins", sans-serif;
   background-color: #f0f0f0;
   color: #1b1b1b;
   border-radius: 5px;
@@ -40,41 +40,27 @@ const LongInput = styled.input`
   border: 1px #1b1b1b solid;
   padding: 3px;
 `
-const DpInput = styled.input`
-  display: none;
-`
 const Label = styled.label`
   font-size: 11px;
-  font-family: 'nunito', sans-serif;
+  font-family: "nunito", sans-serif;
 `
-const PhotoLabel = styled.label`
-  font-size: 11px;
-  font-family: 'nunito', sans-serif;
-  text-align: center;
+const ErrorMessage = styled.span`
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  font-family: "nunito", sans-serif;
 `
-const ImageHolder = styled.div`
-  margin-top: 10px; 
-  width: 100%;
+const CheckboxContainer = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  margin-top: 20px;
 `
-const ProfilePictureButton = styled.label`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  background-image: url(${props => props.image});
-  background-size: cover;
-  background-position: center;
+const Checkbox = styled.input`
+  margin-right: 10px;
 `
-const PlusSign = styled.span`
-  font-size: 32px;
+const TermsLabel = styled.label`
+  font-size: 12px;
+  font-family: "nunito", sans-serif;
 `
 const Button = styled.button`
   width: 200px;
@@ -82,157 +68,195 @@ const Button = styled.button`
   border-radius: 5px;
   border: none;
   transition: 0.3s ease;
-  background-color: #ff6f00;
+  background-color: ${(props) => (props.disabled ? "#ccc" : "#ff6f00")};
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
 
   &:hover {
-    background-color: #944103;
+    background-color: ${(props) => (props.disabled ? "#ccc" : "#944103")};
   }
 `
+const A = styled.a`
+  color: #c95802;
+`
+
 const Signup = () => {
+  const initialUser = {
+    first_name: "",
+    middle_name: "",
+    surname: "",
+    username: "",
+    email: "",
+    password: "",
+    confirm_password: "",
+    dob: "",
+    dp: null,
+  }
 
-    const initialUser = {
-        first_name: "",
-        middle_name: "",
-        surname: "",
-        username: "",
-        email: "",
-        password: "",
-        dob: "",
-        dp: null
+  const navigate = useNavigate()
+  const [user, setUser] = useState(initialUser)
+  const [agreed, setAgreed] = useState(false)
+  const [passwordMatch, setPasswordMatch] = useState(true);
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setUser((currentUser) => ({
+      ...currentUser,
+      [name]: value,
+    }));
+
+    if (name === "confirm_password" || name === "password") {
+      setPasswordMatch(user.password === value || user.confirm_password === value);
     }
+  }
 
-    const navigate = useNavigate()
-    /*const [profilePicture, setProfilePicture] = useState(null)
 
-    const handleImageUpload = (event) => {
-        const file = event.target.files[0]
-        const reader = new FileReader()
-      
-        reader.onloadend = () => {
-          setProfilePicture(reader.result)
-        }
+  const handleCheckboxChange = () => {
+    setAgreed((prev) => !prev)
+  }
 
-        if (file) {
-          reader.readAsDataURL(file)
-        }
-    }*/
+  const handleSignUp = async (event) => {
+    event.preventDefault()
+    if (!agreed) return
 
-    const [user, setUser] = useState(initialUser)
-
-    const handleChange = ({target}) => {
-      const {name, value} = target
-      setUser((currentUser) => ({
-        ...currentUser,
-        [name]: value,
-      }) )
+    try {
+      console.log(user)
+      await signup(user)
+      setUser(initialUser)
+      navigate("/")
+    } catch (error) {
+      setUser(initialUser)
+      throw error
     }
+  }
 
-    const handleSignUp = async (event) => {
-        event.preventDefault()
-        try {
-            console.log(user)
-            await signup(user)
-            setUser(initialUser)
-            navigate('/')
-        } catch (error) {
-          setUser(initialUser)
-          throw error
-        }
-    }
+  return (
+    <SignUpForm onSubmit={handleSignUp}>
+      <FieldContainer>
+        <Label htmlFor="first_name">First Name</Label>
+        <ShortInput
+          type="text"
+          name="first_name"
+          placeholder="First Name"
+          required
+          value={user.first_name}
+          onChange={handleChange}
+        />
+      </FieldContainer>
 
-    return (
-      <SignUpForm action="">
-
-        <FieldContainer>
-          <Label htmlFor="first_name">First Name</Label>
-          <ShortInput 
-            type='text' 
-            name="first_name"
-            placeholder="First Name" 
-            required
-            value={user.first_name}
-            onChange={handleChange}
-            />
-        </FieldContainer>
-
-        <FieldContainer>
-          <Label htmlFor="middleName">Middle Name</Label>
-          <ShortInput 
-          type='text' 
-          name="middle_name" 
+      <FieldContainer>
+        <Label htmlFor="middleName">Middle Name</Label>
+        <ShortInput
+          type="text"
+          name="middle_name"
           placeholder="Middle Name"
-          value = {user.middle_name}
+          value={user.middle_name}
           onChange={handleChange}
-          />
-        </FieldContainer>
+        />
+      </FieldContainer>
 
-        <FieldContainer>
-          <Label htmlFor="surname">Surname</Label>
-          <ShortInput 
-          type='text' 
-          name="surname" 
-          placeholder="surname" 
+      <FieldContainer>
+        <Label htmlFor="surname">Surname</Label>
+        <ShortInput
+          type="text"
+          name="surname"
+          placeholder="Surname"
           required
-          onChange={handleChange}
           value={user.surname}
-          />
-        </FieldContainer>
-
-        <FieldContainer>
-          <Label htmlFor="username">username</Label>
-          <ShortInput 
-          type='text' 
-          name="username" 
-          placeholder="username" 
-          autoComplete="username" 
-          required
           onChange={handleChange}
+        />
+      </FieldContainer>
+
+      <FieldContainer>
+        <Label htmlFor="username">Username</Label>
+        <ShortInput
+          type="text"
+          name="username"
+          placeholder="Username"
+          autoComplete="username"
+          required
           value={user.username}
-          />
-        </FieldContainer>
-
-        <FieldContainer>
-          <Label htmlFor="email">email</Label>
-          <LongInput 
-          type='text' 
-          name="email" 
-          placeholder="email" 
-          autoComplete="username" 
-          required
           onChange={handleChange}
+        />
+      </FieldContainer>
+
+      <FieldContainer>
+        <Label htmlFor="email">Email</Label>
+        <LongInput
+          type="text"
+          name="email"
+          placeholder="Email"
+          autoComplete="email"
+          required
           value={user.email}
-          />
-        </FieldContainer>
+          onChange={handleChange}
+        />
+      </FieldContainer>
 
-        <FieldContainer>
-          <Label htmlFor="password">password</Label>
-          <LongInput 
-          type='password' 
+      <FieldContainer>
+        <Label htmlFor="password">Password</Label>
+        <LongInput
+          type="password"
           name="password"
-          placeholder="Password" 
+          placeholder="Password"
           required
-          onChange={handleChange}
           value={user.password}
-          />
-        </FieldContainer>
-        <FieldContainer>
-          <Label htmlFor="dob">Date Of Birth</Label>
-          <LongInput 
-          type='date' 
-          name="dob" 
-          placeholder="dob" 
-          required
           onChange={handleChange}
+        />
+      </FieldContainer>
+
+      <FieldContainer>
+        <Label htmlFor="confirm_password">Confirm Password</Label>
+        <LongInput
+          type="password"
+          name="confirm_password"
+          placeholder="Confirm Password"
+          required
+          value={user.confirm_password}
+          onChange={handleChange}
+        />
+        {!passwordMatch && (
+          <ErrorMessage>Passwords do not match</ErrorMessage>
+        )}
+      </FieldContainer>
+
+      <FieldContainer>
+        <Label htmlFor="dob">Date Of Birth</Label>
+        <LongInput
+          type="date"
+          name="dob"
+          required
           value={user.dob}
-          />
-        </FieldContainer>
+          onChange={handleChange}
+        />
+      </FieldContainer>
 
-        <FieldContainer style={{marginTop: '20px'}}>
-          <Button type="button" onClick={handleSignUp}>Sign Up</Button>
-        </FieldContainer>
-        <ToastContainer/>
-      </SignUpForm>
-    )
-}
+      <CheckboxContainer>
+        <Checkbox
+          type="checkbox"
+          id="terms"
+          checked={agreed}
+          onChange={handleCheckboxChange}
+        />
+        <TermsLabel htmlFor="terms">
+          I agree to the{" "}
+          <A href="/terms+conditions" target="_blank" rel="noopener noreferrer">
+            Terms and Conditions
+          </A>{" "}
+          and{" "}
+          <A href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+            Privacy Policy
+          </A>
+        </TermsLabel>
+      </CheckboxContainer>
 
-export default Signup
+      <FieldContainer style={{ marginTop: "20px" }}>
+        <Button type="submit" disabled={!agreed}>
+          Sign Up
+        </Button>
+      </FieldContainer>
+      <ToastContainer />
+    </SignUpForm>
+  );
+};
+
+export default Signup;

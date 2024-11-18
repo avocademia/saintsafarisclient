@@ -1,84 +1,83 @@
 .page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #111632;
+  color: #f0f0f0
 }
 
 .mainSection {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    z-index: 1;
-    padding-top: 80px;
-  
-  }
-  
-  h1 {
-    font-size: 45px;
-    text-align: center;
-    color: #ff6f00;
-    display: flex;
-    flex-wrap: wrap;
-    width: 100vw;
-    justify-content: center;
-  }
-  
-  .subTopics {
-    height: auto;
-    display: flex;
-    justify-content: center;
-    width: 95%;
-  }
-  
-  @media(max-width:768px) {
-    .subTopics {
-      flex-wrap: wrap;
-    }
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  padding-top: 80px;
 
-    .subTopicText {
-      width: auto !important;
-    }
-    
+}
+
+h1 {
+  font-size: 45px;
+  text-align: center;
+  color: #ff6f00;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100vw;
+  justify-content: center;
+}
+
+.subTopics {
+  height: auto;
+  display: flex;
+  justify-content: center;
+  width: 95%;
+}
+
+@media(max-width:768px) {
+  .subTopics {
+    flex-wrap: wrap;
   }
-  
-  .subTopicHeading {
-    width: 270px;
-    min-height: 50px;
-  }
-  
-  h2 {
-    font-size: 20px;
-  }
-  
+
   .subTopicText {
-    width: 600px;
+    width: auto !important;
   }
   
-  ol {
-    list-style-type: none;
-    counter-reset: my-counter; 
-    padding-left: 20px; 
-  }
-  
-  .terms {
-    counter-increment: my-counter; 
-    margin-bottom: 10px; 
-    text-align: left;
-    font-size: 12px;
-  }
-  
-  .terms::before {
-    content: '\2022'; /* Unicode character for a circular bullet */
-    color: #FFF;
-    display: inline-block;
-    width: 1em; /* Adjust the width for spacing */
-  }
-  
-  .bodyLinks {
-    color: #ff6f00;
-    text-decoration: underline;
-  }
-  
+}
+
+.subTopicHeading {
+  width: 270px;
+  min-height: 50px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+.subTopicText {
+  width: 600px;
+}
+
+ol {
+  list-style-type: none;
+  counter-reset: my-counter; 
+  padding-left: 20px; 
+}
+
+.terms {
+  counter-increment: my-counter; 
+  margin-bottom: 10px; 
+  text-align: left;
+  font-size: 12px;
+}
+
+.terms::before {
+  content: '\2022'; /* Unicode character for a circular bullet */
+  color: #FFF;
+  display: inline-block;
+  width: 1em; /* Adjust the width for spacing */
+}
+
+.bodyLinks {
+  color: #ff6f00;
+  text-decoration: underline;
+}

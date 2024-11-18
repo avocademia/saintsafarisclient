@@ -75,12 +75,12 @@ const Login = () => {
     }
 
     return (
-      <LogInForm method="POST">
+      <LogInForm method="POST" onSubmit={handleLogIn}>
           <ToastContainer/>
           <FieldContainer>
               <Label htmlFor="email/username">username/email</Label>
               <Input 
-                type="email" 
+                type="text" 
                 name="identifier"
                 id="email/username" 
                 placeholder="email/username" 
@@ -100,7 +100,7 @@ const Login = () => {
               />
           </FieldContainer>
           <FieldContainer style={{marginTop: '20px'}}>
-            <Button type="button" onClick={handleLogIn}>Log In</Button>
+            <Button type='submit'>Log In</Button>
           </FieldContainer>
       </LogInForm>
     )
