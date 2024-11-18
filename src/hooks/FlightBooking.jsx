@@ -5,8 +5,6 @@ const flightBooking = async (data) => {
     const devUrl = import.meta.env.VITE_DEV_URL
     const prodUrl = import.meta.env.VITE_PROD_URL
     const environment = import.meta.env.NODE_ENV
-
-    console.log('flight booking:', data)
   
     try {
       const authorized = await authCheck()

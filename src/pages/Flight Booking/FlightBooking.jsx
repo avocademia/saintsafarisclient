@@ -138,7 +138,7 @@ const FlightBooking = () => {
             
             <h3>Client Details</h3>
         <div className={style.fieldContainer}>
-          <label>Title:
+          <label className={style.fieldLabel}>Title:
             <select name="title" value={formData.title} onChange={handleInputChange}>
               <option value="">Select Title</option>
               <option value="Mr.">Mr.</option>
@@ -149,12 +149,12 @@ const FlightBooking = () => {
           </label>
         </div>
         <div className={style.fieldContainer}>
-          <label>Full Name:
+          <label className={style.fieldLabel}>Full Name:
             <input type="text" name="full_name" value={formData.full_name} onChange={handleInputChange} />
           </label>
         </div>
         <div className={style.fieldContainer}>
-          <label>Phone Number:
+          <label className={style.fieldLabel}>Phone Number:
             <PhoneInput
               country={'us'}
               value={formData.phone}
@@ -164,39 +164,39 @@ const FlightBooking = () => {
           </label>
         </div>
         <div className={style.fieldContainer}>
-          <label>Email:
+          <label className={style.fieldLabel}>Email:
             <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
           </label>
         </div>
 
         <h3>Travel Details</h3>
         <div className={style.fieldContainer}>
-                <label>No. of Adults Travelling (12yrs+):
+                <label className={style.fieldLabel}>No. of Adults Travelling (12yrs+):
                     <input type="number" name="adults" value={formData.adults} onChange={handleInputChange} />
                 </label>
             </div>
             <div className={style.fieldContainer}>
-                <label>No. of Children Travelling (2 - 11yrs):
+                <label className={style.fieldLabel}>No. of Children Travelling (2 - 11yrs):
                     <input type="number" name="children" value={formData.children} onChange={handleInputChange} />
                 </label>
             </div>
             <div className={style.fieldContainer}>
-                <label>No. of Infants Travelling (0 - 23 months):
+                <label className={style.fieldLabel}>No. of Infants Travelling (0 - 23 months):
                     <input type="number" name="infants" value={formData.infants} onChange={handleInputChange} />
                 </label>
             </div>
             <div className={style.fieldContainer}>
-                <label>City of Residence/Departure:
+                <label className={style.fieldLabel}>City of Residence/Departure:
                     <input type="text" name="city" value={formData.city} onChange={handleInputChange} />
                 </label>
             </div>
             <div className={style.fieldContainer}>
-                <label>Date of Travel:
+                <label className={style.fieldLabel}>Date of Travel:
                     <input type="date" name="travel_date" value={formData.travel_date} onChange={handleInputChange} />
                 </label>
             </div>
             <div className={style.fieldContainer}>
-                <label>Trip Type:
+                <label className={style.fieldLabel}>Trip Type:
                     <select name="tripType" value={formData.tripType} onChange={handleTripTypeChange}>
                         <option value="">Select</option>
                         <option value="one-way">One-way</option>
@@ -208,7 +208,7 @@ const FlightBooking = () => {
 
             {formData.tripType === 'one-way' && (
                 <div className={style.fieldContainer}>
-                    <label>Destination:
+                    <label className={style.fieldLabel}>Destination:
                         <input type="text" name="destination" value={formData.destination} onChange={handleInputChange} />
                     </label>
                 </div>
@@ -216,7 +216,7 @@ const FlightBooking = () => {
 
             {formData.tripType === 'return' && (
                 <div className={style.fieldContainer}>
-                    <label>Return Date:
+                    <label className={style.fieldLabel}>Return Date:
                         <input type="date" name="return_date" value={formData.return_date} onChange={handleInputChange} />
                     </label>
                 </div>
@@ -225,7 +225,7 @@ const FlightBooking = () => {
 {formData.tripType === 'multi-city' && (
   <>
     <div className={style.fieldContainer}>
-      <label>Number of Cities:
+      <label className={style.fieldLabel}>Number of Cities:
         <input 
           type="number" 
           name="numberOfCities" 
@@ -236,7 +236,7 @@ const FlightBooking = () => {
     </div>
     {Array.from({ length: formData.numberOfCities }, (_, i) => (
       <div key={i} className={style.fieldContainer}>
-        <label>City {i + 1}:
+        <label className={style.fieldLabel}>City {i + 1}:
           <input
             type="text"
             name={`city_${i}`}
@@ -244,9 +244,9 @@ const FlightBooking = () => {
             onChange={(e) => handleMultiCityChange(i, 'city', e.target.value)}
           />
         </label>
-        {/* Only render the "Date of departure" for cities except the last one */}
+
         {i !== formData.numberOfCities - 1 && (
-          <label>Date of departure {i + 1}:
+          <label className={style.fieldLabel}>Date of departure {i + 1}:
             <input
               type="date"
               name={`date_${i}`}
@@ -265,7 +265,7 @@ const FlightBooking = () => {
           <div key={index} className={style.travelerContainer}>
             <h4>Traveler {index + 1}</h4>
             <div className={style.fieldContainer}>
-              <label>Title:
+              <label className={style.fieldLabel}>Title:
                 <select name="title" value={traveler.title} onChange={(e) => handleTravelerChange(index, e)}>
                   <option value="">Select Title</option>
                   <option value="Mr.">Mr.</option>
@@ -276,12 +276,12 @@ const FlightBooking = () => {
               </label>
             </div>
             <div className={style.fieldContainer}>
-              <label>Full Name:
+              <label className={style.fieldLabel}>Full Name:
                 <input type="text" name="full_name" value={traveler.full_name} onChange={(e) => handleTravelerChange(index, e)} />
               </label>
             </div>
             <div className={style.fieldContainer}>
-              <label>Identification Type:
+              <label className={style.fieldLabel}>Identification Type:
                 <select
                   name="identification_type"
                   value={traveler.identification_type}
@@ -296,12 +296,12 @@ const FlightBooking = () => {
               </label>
             </div>
             <div className={style.fieldContainer}>
-              <label>Identification No.:
+              <label className={style.fieldLabel}>Identification No.:
                 <input type="text" name="identification_no" value={traveler.identification_no} onChange={(e) => handleTravelerChange(index, e)} />
               </label>
             </div>
             <div className={style.fieldContainer}>
-              <label>Nationality:
+              <label className={style.fieldLabel}>Nationality:
                 <Select
                   options={countries}
                   name="nationality"
@@ -314,7 +314,7 @@ const FlightBooking = () => {
           </div>
         ))}
  <div className={style.fieldContainer}>
-          <label>
+          <label className={style.fieldLabel}>
             Do you require visa assistance?
             <input
               type="checkbox"
