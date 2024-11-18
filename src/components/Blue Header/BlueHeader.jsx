@@ -21,8 +21,8 @@ const BlueHeader = () => {
             <img className={style.logo} src={logoBlue}/>
             <nav ref={navRef} className={style.navMenu}>
                 <Link className={style.blueNavItem} to="/">Home</Link>
-                <Link className={style.blueNavItem} to="/tours">Tours</Link>
                 <Link className={style.blueNavItem} to="/about">About Us</Link>
+                <Link className={style.blueNavItem} to="/tours">Tours</Link>
                 
                 <div className={style.dropdown}>
                     <button

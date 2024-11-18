@@ -22,8 +22,6 @@ const WhiteHeader = () => {
       <nav ref={navRef} className={style.navMenu}>
         <Link className={style.whiteNavItem} to="/">Home</Link>
         <Link className={style.whiteNavItem} to="/tours">Tours</Link>
-        <Link className={style.whiteNavItem} to="/about">About Us</Link>
-
         <div className={style.dropdown}>
           <button
             className={style.whiteNavItem}
@@ -38,7 +36,7 @@ const WhiteHeader = () => {
             </div>
           )}
         </div>
-
+        <Link className={style.whiteNavItem} to="/about">About Us</Link>
         <div className={style.buttonsContainer}>
           <Link to="/contact"><FaPhone className={style.whiteHeaderButton} /></Link>
           <a href="https://wa.me/254755487271" target="_blank"><FaWhatsapp className={style.whiteHeaderButton} /></a>
