@@ -18,34 +18,63 @@ import { Link, useParams } from "react-router-dom"
 import { FaBed, FaSun, FaStar, FaLessThanEqual } from "react-icons/fa"
 import { userData } from "../../Helpers"
 import fetchReviews from "../../hooks/ReviewsFetch"
-import { useState } from "react"
-
-
+import { useEffect, useState } from "react"
 
 const Tour = () => {
   const { id } = useParams()
-  const tourId = id
   const {username} = userData()
-  const { data, error, loading } = useDataFetching(id)
   const isReviewAdded = useReviewCheck(id)
-  const {reviews} = fetchReviews(tourId)
-  const [addedNewReview, setNewReviewAdded] = useState(false);
+  const [newReview, setNewReview] = useState(false)
+  const [allReviews, setReviews]  = useState([])
+  const [tour, setTour] = useState({
+    attributes: {
+      title: "Loading Tour...",
+      description: "",
+      days: 0,
+      nights: 0, 
+      ideal_dates: {},
+      disclaimer: {},
+      cancellations: {},
+      media: {
+        data: [
+          {
+            id: 0,
+            attributes: {
+              url: "",  // Default to an empty string for the URL
+              name: "Default Image",
+            },
+          },
+        ],
+      },
+    },
+    id: 0,
+  })
 
-  const handleItinerary = () => {
+  const onSubmit = () => {
+    setNewReview(true)
+  }
 
+  useEffect(() =>{
+    const fetchTourData = async () => {
+      try {
+
+        const data = await useDataFetching(id)
+        const reviews = await fetchReviews(id)
+        setTour(data.data)
+        setReviews(reviews)
+  
+      } catch (error) {
+        throw error
+      }
+    }
+    fetchTourData()
+  },[newReview])
+
+  /*const handleItinerary = () => {
     toast ( "service currently unavailable", {
       hideProgressBar: true,
     })
-
-  }
-
-  const handleReviewSubmitted = () => {
-    setNewReviewAdded(true)
-    isReviewAdded
- }
-
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error :(</p>
+  }*/
 
   const devUrl = import.meta.env.VITE_DEV_URL
   const prodUrl = import.meta.env.VITE_PROD_URL
@@ -54,7 +83,7 @@ const Tour = () => {
     <main className={style.page}>
       <WhiteHeader />
       <section className={style.imageSlider}>
-        <h1>{data.attributes.title}</h1>
+        <h1>{tour.attributes.title}</h1>
         <Swiper
           effect={'coverflow'}
           grabCursor={true}
@@ -71,36 +100,36 @@ const Tour = () => {
           modules={[EffectCoverflow, Pagination]}
           className={`${style.mySwiper} mySwiper`}
         >
-          {data && data.attributes.media.data.map((photo) => (
+          {tour && tour.attributes.media.data.map((photo) => (
             <SwiperSlide key = {photo.id} className={`${style.swiperSlider} swiperSlider`}>
-              <img src={`${devUrl}${photo.attributes.url}`} alt={photo.attributes.name} />
+              <img src={`${import.meta.env.NODE_ENV === 'production'? prodUrl : devUrl}${photo.attributes.url}`} alt={photo.attributes.name} />
             </SwiperSlide>
           ))}
         </Swiper>
       </section>
       <section className={style.secondSection}>
         <article className={style.description}>
-          <p>{data.attributes.description}</p>
+          <p>{tour.attributes.description}</p>
           <div className={style.durationButtons}>
             <div className={style.duration}>
               <FaSun />
-              <p>{data.attributes.days}</p>
+              <p>{tour.attributes.days}</p>
             </div>
             <div className={style.duration}>
               <FaBed />
-              <p>{data.attributes.nights}</p>
+              <p>{tour.attributes.nights}</p>
             </div>
           </div>
         </article>
-        <Accordion data={data} />
+        <Accordion data={tour} />
         <article className={style.tourPackageButtons}>
           {/*<button onClick = {handleItinerary}>Itinerary</button>*/}
           <Link to="/tourbooking"><button>Book Now</button></Link>
         </article>
       </section>
       <section className={style.thirdSection}>
-        {!isReviewAdded && !addedNewReview  && username && <Form tourId = {id} newReview = {handleReviewSubmitted}/>}
-        {addedNewReview || isReviewAdded && username && <Thankyou/>}
+        {!isReviewAdded && newReview===false && username && <Form tourId = {id} reviewChecker = {onSubmit}/>}
+        {(isReviewAdded || newReview===true) && username && <Thankyou/>}
         {!username && <Login/>}
         <article className={style.reviewSliderContainer}>
           <Swiper
@@ -119,7 +148,7 @@ const Tour = () => {
             modules={[EffectCoverflow, Pagination]}
             className={`${style.mySwiper} mySwiper`}
           >
-            {reviews.map((review) => (
+            {allReviews.map((review) => (
               <SwiperSlide className={`${style.reviewSlider} swiperSlider`} key={review.id}>
                 <div className={style.topSlideSection}>
                   <div className={style.customerProfile}>
@@ -148,7 +177,7 @@ const Tour = () => {
       </section>
       <Footer />
     </main>
-  );
-};
+  )
+}
 
 export default Tour;

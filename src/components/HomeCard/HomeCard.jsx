@@ -2,14 +2,25 @@ import { FaStar } from 'react-icons/fa'
 import style from "./HomeCard.module.css"
 import { Link } from 'react-router-dom'
 import fetchReviews from "../../hooks/ReviewsFetch"
-import { userData } from '../../Helpers'
+import { useState, useEffect } from 'react'
 
 const TourCard = ({ tour, tourId }) => {
 
   const devUrl = import.meta.env.VITE_DEV_URL
   const prodUrl = import.meta.env.VITE_PROD_URL
   
-  const { reviews } = fetchReviews(tourId)
+  const [reviews, setReviews] = useState({length: 0})
+  useEffect(()=> {
+    const getReviews = async () => {
+      try {
+        const data = await fetchReviews(tourId)
+        setReviews(data)
+      } catch (error) {
+        throw error
+      }
+    }
+    getReviews()
+  })
 
   const renderStars = (rating) => {
     const stars = [];
@@ -32,7 +43,7 @@ const TourCard = ({ tour, tourId }) => {
   return (
     <article className={style.card} key={tour.id} >
       <div className={style.imageContainer} key={tour.id}>
-        <img src={`${devUrl}${tour.attributes.display_picture.data.attributes.url}`} alt={tour.attributes.title}/>
+        <img src={`${import.meta.env.NODE_ENV === 'production'? prodUrl : devUrl}${tour.attributes.display_picture.data.attributes.url}`} alt={tour.attributes.title}/>
       </div>
       <div className={style.textContainer}>
         <h1 className={style.cardTitle}>{tour.attributes.title.toUpperCase()}</h1>

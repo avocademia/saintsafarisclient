@@ -1,21 +1,13 @@
-import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const fetchSingleTour = () => {
+const fetchSingleTour = async () => {
 
-  const [data, setData] = useState([])
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(true)
+    const devUrl = import.meta.env.VITE_DEV_URL
+    const prodUrl = import.meta.env.VITE_PROD_URL
+    const apiToken = import.meta.env.VITE_API_TOKEN
+    const environment = import.meta.env.NODE_ENV
 
-  useEffect(() => {
-    const fetchData = async () => {
-
-      const devUrl = import.meta.env.VITE_DEV_URL
-      const prodUrl = import.meta.env.VITE_PROD_URL
-      const apiToken = import.meta.env.VITE_API_TOKEN
-      const environment = import.meta.env.NODE_ENV
-
-      try {
+    try {
 
         const res = await axios.get(
           `${environment === 'production'? prodUrl : devUrl}/api/tours?populate[media]=true&populate[display_picture]=true&`,
@@ -25,18 +17,10 @@ const fetchSingleTour = () => {
             },
           }
         );
-        setData(res.data.data)
-        setLoading(false)
-      } catch (error) {
-        setError(error)
-        setLoading(false)
-      }
+        return res.data.data
+    } catch (error) {
+        throw error
     }
-
-    fetchData()
-  }, [])
-
-  return { data, error, loading }
 }
 
 export default fetchSingleTour

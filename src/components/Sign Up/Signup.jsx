@@ -156,9 +156,10 @@ const prodUrl = import.meta.env.VITE_PROD_URL
 
       }
     } catch (error) {
-      toast("An error occured please try again later", {
+      toast(error.response.data.error.message, {
         hideProgressBar: true,
-      })  
+      }) 
+      console.log(error) 
     }
   }
   return (
