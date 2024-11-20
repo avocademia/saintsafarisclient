@@ -80,6 +80,7 @@ const Login = () => {
           const {data} = res
 
           if (data.jwt && data.user) {
+            console.log('user data:',data)
             toast.success("logged In succesfully",{
               hideProgressBar: true,
             })
@@ -92,6 +93,7 @@ const Login = () => {
       toast("An error occured please try again later", {
         hideProgressBar: true,
       })
+      console.log(error)
     }
   }
   return (
