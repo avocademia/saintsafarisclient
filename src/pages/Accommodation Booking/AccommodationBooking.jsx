@@ -235,23 +235,26 @@ const AccommodationBooking = () => {
           {/* Handle Lodging Amenities */}
           {selectedAccommodation === "lodging" &&
             Object.entries(accommodationFeatures.lodging).map(
-              ([category, features]) => (
-                <div key={category} className={style.fieldLabel}>
-                  <h4>{category.replace(/([A-Z])/g, " $1")}</h4> {/* Format category names */}
-                  {Array.isArray(features) &&
-                    features.map((feature) => (
-                      <label key={feature} className={style.fieldLabel}>
-                        <input
-                          type="checkbox"
-                          value={feature}
-                          checked={formData.amenities.includes(feature)}
-                          onChange={handleAmenityChange}
-                        />
-                        {feature}
-                      </label>
-                    ))}
-                </div>
-              )
+              ([category, features]) =>
+                // Exclude Room Types and Bed Preferences for Lodging
+                category !== "roomTypes" &&
+                category !== "bedPreferences" && (
+                  <div key={category}>
+                    <h4><label className={style.fieldLabel} htmlFor="">{category.replace(/([A-Z])/g, " $1")}</label></h4> {/* Format category names */}
+                    {Array.isArray(features) &&
+                      features.map((feature) => (
+                        <label key={feature} className={style.fieldLabel}>
+                          <input
+                            type="checkbox"
+                            value={feature}
+                            checked={formData.amenities.includes(feature)}
+                            onChange={handleAmenityChange}
+                          />
+                          {feature}
+                        </label>
+                      ))}
+                  </div>
+                )
             )}
 
           {/* Handle Private Rental Amenities */}
@@ -297,7 +300,7 @@ const AccommodationBooking = () => {
             </label>
           </div>
           <div>
-          <h4>  <label className={style.fieldLabel}> View Preferences:</label></h4>
+            <h4><label className={style.fieldLabel}>View Preferences:</label></h4>
             {accommodationFeatures.preferences.viewPreferences.map((view) => (
               <label key={view} className={style.fieldLabel}>
                 <input
@@ -310,34 +313,39 @@ const AccommodationBooking = () => {
               </label>
             ))}
           </div>
-          <div>
-           <h4> <label className={style.fieldLabel}>Bed Preferences:</label></h4>
-            {accommodationFeatures.preferences.bedPreferences.map((bed) => (
-              <label key={bed} className={style.fieldLabel}>
-                <input
-                  type="checkbox"
-                  value={bed}
-                  checked={formData.amenities.includes(bed)}
-                  onChange={handleAmenityChange}
-                />
-                {bed}
-              </label>
-            ))}
-          </div>
-          <div>
-           <h4> <label className={style.fieldLabel}>Room Types:</label> </h4>
-            {accommodationFeatures.preferences.roomTypes.map((roomType) => (
-              <label key={roomType} className={style.fieldLabel}>
-                <input
-                  type="checkbox"
-                  value={roomType}
-                  checked={formData.amenities.includes(roomType)}
-                  onChange={handleAmenityChange}
-                />
-                {roomType}
-              </label>
-            ))}
-          </div>
+          {/* Only show Bed Preferences and Room Types for Private Rental */}
+          {selectedAccommodation === "private_rental" && (
+            <>
+              <div>
+                <h4><label className={style.fieldLabel}>Bed Preferences:</label></h4>
+                {accommodationFeatures.preferences.bedPreferences.map((bed) => (
+                  <label key={bed} className={style.fieldLabel}>
+                    <input
+                      type="checkbox"
+                      value={bed}
+                      checked={formData.amenities.includes(bed)}
+                      onChange={handleAmenityChange}
+                    />
+                    {bed}
+                  </label>
+                ))}
+              </div>
+              <div>
+                <h4><label className={style.fieldLabel}>Room Types:</label></h4>
+                {accommodationFeatures.preferences.roomTypes.map((roomType) => (
+                  <label key={roomType} className={style.fieldLabel}>
+                    <input
+                      type="checkbox"
+                      value={roomType}
+                      checked={formData.amenities.includes(roomType)}
+                      onChange={handleAmenityChange}
+                    />
+                    {roomType}
+                  </label>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
 
@@ -388,17 +396,6 @@ const AccommodationBooking = () => {
             <option value="Other">Other (specify below)</option>
           </select>
           <input type="text" name="other_budget" placeholder="Specify if other" />
-          </label>
-  
-          <label className={style.fieldLabel}>Preferred Payment Method:
-          <select name="payment_method">
-            <option value="Credit Card">Credit Card</option>
-            <option value="Debit Card">Debit Card</option>
-            <option value="PayPal">PayPal</option>
-            <option value="Cash">Cash</option>
-            <option value="Cash">Mpesa</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-          </select>
           </label>
         </div>
         <button className={style.submitBtn} type="submit">
