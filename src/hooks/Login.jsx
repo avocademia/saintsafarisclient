@@ -25,10 +25,10 @@ const login = async (user) => {
             }
       }
     } catch (error) {
-      toast("An error occured please try again later", {
+      toast(`${error.response.data.error.message}`, {
         hideProgressBar: true,
       })
-      throw error
+      return error
     }
 }
 

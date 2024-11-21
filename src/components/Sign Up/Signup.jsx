@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import signup from "../../hooks/signup";
+import signup from '../../hooks/Signup';
 import { useNavigate } from "react-router-dom";
 
 const SignUpForm = styled.form`
@@ -119,13 +119,11 @@ const Signup = () => {
     if (!agreed) return
 
     try {
-      console.log(user)
       await signup(user)
-      setUser(initialUser)
-      navigate("/")
+      //setUser(initialUser)
+      //navigate("/")
     } catch (error) {
-      setUser(initialUser)
-      throw error
+      //setUser(initialUser)
     }
   }
 
