@@ -129,12 +129,13 @@ const AccommodationBooking = () => {
     const { value, checked } = e.target;
     setFormData((prevData) => {
       const updatedAmenities = checked
-        ? [...prevData.amenities, value]
-        : prevData.amenities.filter((amenity) => amenity !== value);
-
+        ? [...(prevData.amenities || []), value] // Fallback to empty array
+        : (prevData.amenities || []).filter((amenity) => amenity !== value);
+  
       return { ...prevData, amenities: updatedAmenities };
     });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
@@ -220,7 +221,7 @@ const AccommodationBooking = () => {
         Accommodation Type:
         <select
           name="accommodationBooking"
-          value={formData.accommodationBooking}
+          value={formData.accommodationBooking || ""}
           onChange={handleChange}
         >
           <option value="">Select Type</option>
@@ -355,11 +356,11 @@ const AccommodationBooking = () => {
                 <div className={style.fieldContainer}>
           <h3>2. Stay Details</h3>
           <label className={style.fieldLabel}>Check-in Date:
-          <input type="date" name="check_in" />
+          <input type="date" name="check_in"   value={formData.check_in || ""} onChange={handleInputChange}/>
           </label>
   
           <label className={style.fieldLabel}>Check-out Date:
-          <input type="date" name="check_out" />
+          <input type="date" name="check_out"   value={formData.check_out || ""} onChange={handleInputChange}/>
           </label>
   
           <label className={style.fieldLabel}>Number of Guests:
@@ -388,7 +389,7 @@ const AccommodationBooking = () => {
         <div className={style.fieldContainer}>
           <h3>3. Budget and Payment Preferences</h3>
           <label className={style.fieldLabel}>Budget Range (per night):
-          <select name="budget">
+          <select name="budget"   value={formData.budget || ""} onChange={handleInputChange}>
             <option value="$50 - $100">$50 - $100</option>
             <option value="$101 - $200">$101 - $200</option>
             <option value="$201 - $300">$201 - $300</option>
