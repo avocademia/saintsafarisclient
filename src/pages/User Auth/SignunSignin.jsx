@@ -6,7 +6,6 @@ import loginjpg from '../../assets/login.jpg'
 import logo from '../../assets/logoWhite.png'
 import Login from '../../components/Log In/Login'
 
-
 const ThePage = styled.main`
   display: flex;
   justify-content: center;
@@ -165,51 +164,51 @@ position: absolute;
 `
 
 const SignupSignin = () => {
-  const [isSignUp, setIsSignUp] = useState(true);
+    const [isSignUp, setIsSignUp] = useState(true)
 
-  const handleToggleForm = () => {
-    setIsSignUp(!isSignUp)
-  }
+    const handleToggleForm = () => {
+      setIsSignUp(!isSignUp)
+    }
 
-  return (
-    <ThePage>
-      <Container >
-        <MainPanel>
-            <SignupPanel style={isSignUp ? {zIndex: '1'} : {zIndex: '0'}}>
-                <FormContainer visible={`${isSignUp}`}>
-                    <Title style={{color: '#c95802'}}>Sign Up</Title>
-                    <Signup/>
-                </FormContainer>
-            </SignupPanel>
-            <LoginPanel style={!isSignUp ? {zIndex: '1'} : {zIndex: '0'}}>
-                <FormContainer visible={`${!isSignUp}`}>
-                    <h2 style={{color: '#233393'}}>Log In</h2>
-                    <Login/>
-                </FormContainer>
-            </LoginPanel>
-        </MainPanel>     
-        <TransformPanel>
-            <Background src={isSignUp? loginjpg : signupjpg}></Background>
-            <Logo src={logo}></Logo>
-            <LoginText style={isSignUp ? {opacity: '1'} : {opacity: '0'}}>CONTINUE CURATING YOUR TRAVEL EXPERIENCE</LoginText> :
-            <SignupText style={!isSignUp ? {opacity: '1'} : {opacity: '0'}}>
-                  Unlock the world of personalized exploration. 
-                  Craft the perfect travel experience for yourself by 
-                  saving your favorite tour packages and dream 
-                  destinations to your private bucket list. Explore 
-                  featured destinations, engage with insightful blog 
-                  posts, and connect with fellow travelers. Start 
-                  your journey today and turn your travel dreams into 
-                  reality. Let's embark on unforgettable adventures together!
-            </SignupText>
-            <Button onClick={handleToggleForm}>
-                {isSignUp ? "Log In" : "Create an account"}
-            </Button>
-          </TransformPanel>
-      </Container>
-    </ThePage>
-    
-  );
-};
+    return (
+      <ThePage>
+        <Container >
+          <MainPanel>
+              <SignupPanel style={isSignUp ? {zIndex: '1'} : {zIndex: '0'}}>
+                  <FormContainer visible={`${isSignUp}`}>
+                      <Title style={{color: '#c95802'}}>Sign Up</Title>
+                      <Signup/>
+                  </FormContainer>
+              </SignupPanel>
+              <LoginPanel style={!isSignUp ? {zIndex: '1'} : {zIndex: '0'}}>
+                  <FormContainer visible={`${!isSignUp}`}>
+                      <h2 style={{color: '#233393'}}>Log In</h2>
+                      <Login/>
+                  </FormContainer>
+              </LoginPanel>
+          </MainPanel>     
+          <TransformPanel>
+              <Background src={isSignUp? loginjpg : signupjpg}></Background>
+              <Logo src={logo}></Logo>
+              <LoginText style={isSignUp ? {opacity: '1'} : {opacity: '0'}}>CONTINUE CURATING YOUR TRAVEL EXPERIENCE</LoginText> :
+              <SignupText style={!isSignUp ? {opacity: '1'} : {opacity: '0'}}>
+                    Unlock the world of personalized exploration. 
+                    Craft the perfect travel experience for yourself by 
+                    saving your favorite tour packages and dream 
+                    destinations to your private bucket list. Explore 
+                    featured destinations, engage with insightful blog 
+                    posts, and connect with fellow travelers. Start 
+                    your journey today and turn your travel dreams into 
+                    reality. Let's embark on unforgettable adventures together!
+              </SignupText>
+              <Button onClick={handleToggleForm}>
+                  {isSignUp ? "Log In" : "Create an account"}
+              </Button>
+            </TransformPanel>
+        </Container>
+      </ThePage>
+      
+    )
+}
 
-export default SignupSignin;
+export default SignupSignin

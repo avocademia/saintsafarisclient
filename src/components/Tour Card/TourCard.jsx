@@ -41,23 +41,25 @@ const TourCard = ({ tour, tourId }) => {
   const prodUrl = import.meta.env.VITE_PROD_URL
 
   return (
-    <article className={style.card} key={tour.id} >
-      <div className={style.imageContainer} key={tour.id}>
-        <img src={`${import.meta.env.NODE_ENV === 'production'? prodUrl : devUrl}${tour.attributes.display_picture.data.attributes.url}`} alt={tour.attributes.title}/>
-      </div>
-      <div className={style.textContainer}>
-        <h1 className={style.cardTitle}>{tour.attributes.title.toUpperCase()}</h1>
-        <p className={style.cardDescription}>{tour.attributes.description.substring(0, 150)}...</p>
-      </div>
-      <div className={style.starContainer}>
-        {renderStars(calculateAverageRating(reviews))}
-      </div>
-      <span className={style.totalReviews}>{`(${reviews.length})`}</span>
-      <button className={style.cardButton}>
-        <Link className={style.cardLink} to={`tour/${tour.id}`}>Details</Link>
-      </button>
-    </article>
-  );
-};
+    <Link key={tour.id} className={style.cardLink} to={`tour/${tour.id}`}>
+      <article className={style.card} >
+        <div className={style.imageContainer} key={tour.id}>
+          <img src={`${import.meta.env.NODE_ENV === 'production'? prodUrl : devUrl}${tour.attributes.display_picture.data.attributes.url}`} alt={tour.attributes.title}/>
+        </div>
+        <div className={style.textContainer}>
+          <h1 className={style.cardTitle}>{tour.attributes.title.toUpperCase()}</h1>
+          <p className={style.cardDescription}>{tour.attributes.description.substring(0, 150)}...</p>
+        </div>
+        <div className={style.starContainer}>
+          {renderStars(calculateAverageRating(reviews))}
+        </div>
+        <span className={style.totalReviews}>{`(${reviews.length})`}</span>
+        <button className={style.cardButton}>
+          Details
+        </button>
+      </article>
+    </Link>
+  )
+}
 
 export default TourCard;

@@ -1,9 +1,9 @@
 import styled from "styled-components"
 import { useState } from "react"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { toast } from 'react-toastify'
-import { storeUser } from "../../Helpers"
+import login from "../../hooks/login"
+import { ToastContainer } from "react-toastify"
+import {FaEye,FaTimes} from "react-icons/fa"
 
 const LogInForm = styled.form`
   display: flex;
@@ -46,86 +46,80 @@ const Button = styled.button`
     background-color: #1b1b1b;
   }
 `
-
 const RememberMe = styled.a`
   cursor: pointer;
 `
 
-const initialUser = {identifier: "",password: "" }
 const Login = () => {
-  
-  
-  const [user, setUser] = useState(initialUser)
-  const navigate = useNavigate()
-  
-  const handleChange = (event) => {
-    const {name, value} = event.target
-    setUser((currentUser) => ({
-      ...currentUser,
-      [name]: value,
-    }) )
-  }
 
-  const devUrl = import.meta.env.VITE_DEV_URL
-  const prodUrl = import.meta.env.VITE_PROD_URL
-
-  const handleLogIn = async (event) => {
-    event.preventDefault(); 
-    const url = `${devUrl}/api/auth/local`
-    try {
-
-      if (user.identifier && user.password) {
-          const res = await axios.post(url, user)
-
-          const {data} = res
-
-          if (data.jwt && data.user) {
-            console.log('user data:',data)
-            toast.success("logged In succesfully",{
-              hideProgressBar: true,
-            })
-            setUser(initialUser)
-            navigate("/")
-            storeUser(data)
-          }
-      }
-    } catch (error) {
-      toast("An error occured please try again later", {
-        hideProgressBar: true,
-      })
-      console.log(error)
+    const initialUser = {identifier: "",password: "" }
+    const [user, setUser] = useState(initialUser)
+    const [showPassword, setShowPassword] = useState(false)
+    const navigate = useNavigate()
+    
+    const handleChange = (event) => {
+      const {name, value} = event.target
+      setUser((currentUser) => ({
+        ...currentUser,
+        [name]: value,
+      }) )
     }
-  }
-  return (
-    <LogInForm method="POST">
-        <FieldContainer>
-            <Label htmlFor="email/username">username/email</Label>
-            <Input 
-              type="email" 
-              name="identifier"
-              id="email/username" 
-              placeholder="email/username" 
-              onChange={handleChange} 
-              value={user.identifier}
-              />
-        </FieldContainer>
-        <FieldContainer>
-            <Label htmlFor="pswrd">password</Label>
-            <Input
-             id="pswrd"
-             type="password" 
-             name="password" 
-             placeholder="password"
-             onChange={handleChange}
-             value={user.password}
-             />
-        </FieldContainer>
-        <FieldContainer style={{marginTop: '20px'}}>
-          <Button type="button" onClick={handleLogIn}>Log In</Button>
-        </FieldContainer>
-    </LogInForm>
-  )
-}
 
+    const handleLogIn = async (event) => {
+        event.preventDefault(); 
+        try {
+            await login(user)
+            setUser(initialUser)
+            navigate('/')
+        } catch (error) {
+            setUser(initialUser)
+        }
+    }
+
+    const handleShowPassword = () => {
+        if (!showPassword) {
+          setShowPassword(true)
+        } else {
+          setShowPassword(false)
+        }
+    }
+
+    return (
+      <LogInForm method="POST" onSubmit={handleLogIn}>
+          <ToastContainer/>
+          <FieldContainer>
+              <Label htmlFor="email/username">username/email</Label>
+              <Input 
+                type="text" 
+                name="identifier"
+                id="email/username" 
+                placeholder="email/username" 
+                onChange={handleChange} 
+                value={user.identifier}
+              />
+          </FieldContainer>
+          <FieldContainer>
+              <Label htmlFor="pswrd">password</Label>
+              <>
+                <Input
+                id="pswrd"
+                type={showPassword? 'text' : 'password'} 
+                name="password" 
+                placeholder="password"
+                onChange={handleChange}
+                value={user.password}
+                />
+                <button type='button' onClick={handleShowPassword}>
+                  {showPassword? <FaTimes/>: <FaEye/>}
+                </button>
+              </>
+              
+          </FieldContainer>
+          <FieldContainer style={{marginTop: '20px'}}>
+            <Button type='submit'>Log In</Button>
+          </FieldContainer>
+      </LogInForm>
+    )
+}
 
 export default Login

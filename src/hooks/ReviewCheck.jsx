@@ -32,9 +32,9 @@ const useReviewCheck = (id) => {
     }
 
     fetchUserReviews()
-  }, [id, username])
+  }, [])
 
   return isReviewAdded
-};
+}
 
 export default useReviewCheck

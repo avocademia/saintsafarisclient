@@ -13,6 +13,7 @@ const Home = () => {
     const [tours, setTours] = useState([])
     const {firstName} = userData() || {}
 
+
     useEffect(()=> {
       const getTours = async() => {
           try {
@@ -23,7 +24,7 @@ const Home = () => {
           }
       }
         getTours()
-    }, [firstName])
+    }, [])
   
   return (
     <main className={style.homePage}>

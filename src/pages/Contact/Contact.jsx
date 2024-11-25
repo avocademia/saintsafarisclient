@@ -4,9 +4,12 @@ import style from "./Contact.module.css"
 import { FaPhone, FaWhatsapp, FaEnvelope } from "react-icons/fa"
 import { useState } from "react"
 import {sendQuery} from '../../hooks/sendQuery'
+import { ToastContainer, toast } from "react-toastify"
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 
 const Contact = () => {
 
+    const [loading, setLoading] = useState()
     const [data, setData] = useState({
         full_name: '',
         email: '',
@@ -14,8 +17,6 @@ const Contact = () => {
         message: '',
     })
 
-        
-      
     const handleInputChange = (e) => {
         const { name, value } = e.target
         setData({ ...data, [name]: value })
@@ -25,14 +26,35 @@ const Contact = () => {
 
         e.preventDefault()
         try {
-            await sendQuery(data)
+
+            setLoading(true)
+            const res = await sendQuery(data)
+            if (res) {
+                setLoading(false)
+                setData({
+                    full_name: '',
+                    email: '',
+                    subject: '',
+                    message: '',
+                })
+                toast('query successfully sent we will get back to you shortly', {
+                    hideProgressBar: true,
+                    autoClose: 5000,
+                })
+            }
         } catch (error) {
+            setLoading(false)
             throw error
         }     
     }
 
+    if (loading === true) {
+        return <LoadingSpinner/>
+    }
+
     return (
         <main className={style.page}>
+            <ToastContainer/>
             <BlueHeader/>
             <section className={style.containerOne}> 
                 <article className={style.contactsOne}>
@@ -69,14 +91,14 @@ const Contact = () => {
                             </div>
                         </div>
                     </a>
-                    <a href="mailto:mail@saintsafaris.com">
+                    <a href="mailto:info@saintsafaris.com">
                         <div className={style.contactOption}>
                             <div className={style.iconHolder}>
                                 <FaEnvelope className={style.icon}/>
                             </div>
                             <div className={style.textHolder}>
                                 <h4>Mail</h4>
-                                <span>mail@saintsafaris.com</span>
+                                <span>info@saintsafaris.com</span>
                             </div>
                         </div>
                     </a>
