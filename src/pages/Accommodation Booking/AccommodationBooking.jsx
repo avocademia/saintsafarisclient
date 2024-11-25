@@ -1,40 +1,31 @@
 // src/components/BookingForm.jsx
 import { useState } from "react";
-import "./AccommodationBooking.module.css";
-import { toast } from "react-toastify";
-import PhoneInput from "react-phone-input-2";
-import Select from "react-select";
-import "react-phone-input-2/lib/style.css";
+import "./AccommodationBooking.module.css"
+import { toast } from "react-toastify"
+import PhoneInput from "react-phone-input-2"
+import Select from "react-select"
+import "react-phone-input-2/lib/style.css"
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
-import Header from "../../components/Blue Header/BlueHeader";
-import Footer from "../../components/Footer/Footer";
-import style from "../Flight Booking/FlightBooking.module.css";
-import accommodationBooking from "../../hooks/AccommodationBooking";
-const AccommodationBooking = () => {
-  const [formData, setFormData] = useState({
-    full_name: "",
-    email: "",
-    contact_number: "",
-    address: "",
-    check_in: "",
-    check_out: "",
-    adults: 0,
-    children: 0,
-    purpose: "",
-    other_purpose : "",
-    room_type: "",
-    other_room_type: "",
-    bed_preference: "",
-    view_preference: "",
-    smoking_preference: "",
-    accessibility: "",
-    accessibility_specification: "",
-    budget: "",
-    other_budget: "",
-    payment_method: "",
-    amenities: [],
-  });
+import Header from "../../components/Blue Header/BlueHeader"
+import Footer from "../../components/Footer/Footer"
+import style from "../Flight Booking/FlightBooking.module.css"
+import accommodationBooking from "../../hooks/AccommodationBooking"
 
+const AccommodationBooking = () => {
+
+  const [formData, setFormData] = useState({
+    full_name: "",email: "",
+    contact_number: "",address: "",
+    check_in: "",check_out: "",
+    adults: 0,children: 0,
+    purpose: "",other_purpose : "",
+    room_type: "",other_room_type: "",
+    bed_preference: "",view_preference: "",
+    smoking_preference: "",accessibility: "",
+    accessibility_specification: "",budget: "",
+    other_budget: "",payment_method: "",
+    amenities: [],
+  })
 
   const [loading, setLoading] = useState(false)
   const [selectedAccommodation, setSelectedAccommodation] = useState("");
@@ -100,10 +91,9 @@ const AccommodationBooking = () => {
       bedPreferences: ["King", "Queen", "Twin", "Sofa Bed", "Extra Bed"],
       roomTypes: ["Standard", "Deluxe", "Suite", "Penthouse"],
     },
-  };
+  }
   
-  const features = accommodationFeatures[selectedAccommodation] || [];
-
+  const features = accommodationFeatures[selectedAccommodation] || []
 
   const handlePhoneChange = (phone) => {
     setFormData({ ...formData, phone })
@@ -116,28 +106,30 @@ const AccommodationBooking = () => {
       [name]: type === "checkbox" ? checked : value,
     })
   }
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
 
     if (name === "accommodationBooking") {
-      setSelectedAccommodation(value);
-      setFormData((prevData) => ({ ...prevData, amenities: [] })); // Reset amenities on type change
+      setSelectedAccommodation(value)
+      setFormData((prevData) => ({ ...prevData, amenities: [] }))
     }
-  };
+  }
+
   const handleAmenityChange = (e) => {
-    const { value, checked } = e.target;
+    const { value, checked } = e.target
     setFormData((prevData) => {
       const updatedAmenities = checked
         ? [...prevData.amenities, value]
-        : prevData.amenities.filter((amenity) => amenity !== value);
+        : prevData.amenities.filter((amenity) => amenity !== value)
 
-      return { ...prevData, amenities: updatedAmenities };
-    });
-  };
+      return { ...prevData, amenities: updatedAmenities }
+    })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault()
     setLoading(true)
 
     if (loading === true ){
@@ -145,42 +137,32 @@ const AccommodationBooking = () => {
       }
   
     try {
-      const response = await accommodationBooking(formData); // Use the hook to submit data
-      if (response) {
-        toast.success("Booking submitted successfully!"); // Success notification
-        console.log("Booking response:", response); // Log the response for debugging
-        // Reset form data after successful submission
-        setFormData({
-            full_name: "",
-            email: "",
-            contact_number: "",
-            address: "",
-            check_in: "",
-            check_out: "",
-            adults: 0,
-            children: 0,
-            purpose: "",
-            other_purpose : "",
-            room_type: "",
-            other_room_type: "",
-            bed_preference: "",
-            view_preference: "",
-            smoking_preference: "",
-            accessibility: "",
-            accessibility_specification: "",
-            budget: "",
-            other_budget: "",
-            payment_method: "",
-            amenities: [],
-        });
-      }
-    } catch (error) {
-      toast.error("Failed to submit booking. Please try again."); // Failure notification
-      console.error("Error submitting booking:", error); // Log the error for debugging
-    }
-  };
-  
 
+      const response = await accommodationBooking(formData)
+      if (response) {
+        toast.success("Booking submitted successfully!")
+        setFormData({
+            full_name: "",email: "",
+            contact_number: "",address: "",
+            check_in: "",check_out: "",
+            adults: 0,children: 0,
+            purpose: "",other_purpose : "",
+            room_type: "",other_room_type: "",
+            bed_preference: "",view_preference: "",
+            smoking_preference: "",accessibility: "",
+            accessibility_specification: "",budget: "",
+            other_budget: "",payment_method: "",
+            amenities: [],
+        })
+      }
+
+    } catch (error) {
+
+      toast.error("Failed to submit booking. Please try again.")
+      console.error("Error submitting booking:", error)
+    }
+  }
+  
   return (
     <section className={style.page}>
       <Header />
@@ -232,11 +214,11 @@ const AccommodationBooking = () => {
       {selectedAccommodation && (
         <div>
           <h3>Select Amenities:</h3>
-          {/* Handle Lodging Amenities */}
+
           {selectedAccommodation === "lodging" &&
             Object.entries(accommodationFeatures.lodging).map(
+
               ([category, features]) =>
-                // Exclude Room Types and Bed Preferences for Lodging
                 category !== "roomTypes" &&
                 category !== "bedPreferences" && (
                   <div key={category}>
@@ -257,7 +239,6 @@ const AccommodationBooking = () => {
                 )
             )}
 
-          {/* Handle Private Rental Amenities */}
           {selectedAccommodation === "private_rental" &&
             accommodationFeatures.private_rental.map((feature) => (
               <label key={feature} className={style.fieldLabel}>
@@ -273,7 +254,6 @@ const AccommodationBooking = () => {
         </div>
       )}
 
-      {/* Preferences Section */}
       {selectedAccommodation && (
         <div>
           <h3>Preferences:</h3>
@@ -313,8 +293,7 @@ const AccommodationBooking = () => {
               </label>
             ))}
           </div>
-          {/* Only show Bed Preferences and Room Types for Private Rental */}
-          {selectedAccommodation === "private_rental" && (
+          {selectedAccommodation === "lodging" && (
             <>
               <div>
                 <h4><label className={style.fieldLabel}>Bed Preferences:</label></h4>
