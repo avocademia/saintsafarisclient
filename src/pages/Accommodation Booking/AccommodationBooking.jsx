@@ -22,22 +22,18 @@ const AccommodationBooking = () => {
     children: 0,
     purpose: "",
     other_purpose : "",
-    room_type: "",
-    other_room_type: "",
-    bed_preference: "",
-    view_preference: "",
-    smoking_preference: "",
-    accessibility: "",
-    accessibility_specification: "",
     budget: "",
     other_budget: "",
-    payment_method: "",
+    accommodation_type:"",
     amenities: [],
   });
 
 
+
+
   const [loading, setLoading] = useState(false)
   const [selectedAccommodation, setSelectedAccommodation] = useState("");
+
 
   const accommodationFeatures = {
     lodging: {
@@ -98,16 +94,19 @@ const AccommodationBooking = () => {
         "Mountain View",
       ],
       bedPreferences: ["King", "Queen", "Twin", "Sofa Bed", "Extra Bed"],
-      roomTypes: ["Standard", "Deluxe", "Suite", "Penthouse"],
+      room_type: ["Standard", "Deluxe", "Suite", "Penthouse"],
     },
   };
-  
-  const features = accommodationFeatures[selectedAccommodation] || [];
+ 
+ 
 
 
-  const handlePhoneChange = (phone) => {
-    setFormData({ ...formData, phone })
+
+
+  const handlePhoneChange = (contact_number) => {
+    setFormData({ ...formData, contact_number })
   }
+
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -120,6 +119,7 @@ const AccommodationBooking = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
+
     if (name === "accommodationBooking") {
       setSelectedAccommodation(value);
       setFormData((prevData) => ({ ...prevData, amenities: [] })); // Reset amenities on type change
@@ -129,22 +129,27 @@ const AccommodationBooking = () => {
     const { value, checked } = e.target;
     setFormData((prevData) => {
       const updatedAmenities = checked
-        ? [...(prevData.amenities || []), value] // Fallback to empty array
-        : (prevData.amenities || []).filter((amenity) => amenity !== value);
-  
+        ? [...prevData.amenities, value]
+        : prevData.amenities.filter((amenity) => amenity !== value);
+
+
       return { ...prevData, amenities: updatedAmenities };
     });
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     setLoading(true)
 
+
+    const features = accommodationFeatures[selectedAccommodation] || [];
+
+
     if (loading === true ){
         return <LoadingSpinner/>
       }
-  
+ 
     try {
       const response = await accommodationBooking(formData); // Use the hook to submit data
       if (response) {
@@ -152,27 +157,19 @@ const AccommodationBooking = () => {
         console.log("Booking response:", response); // Log the response for debugging
         // Reset form data after successful submission
         setFormData({
-            full_name: "",
-            email: "",
-            contact_number: "",
-            address: "",
-            check_in: "",
-            check_out: "",
-            adults: 0,
-            children: 0,
-            purpose: "",
-            other_purpose : "",
-            room_type: "",
-            other_room_type: "",
-            bed_preference: "",
-            view_preference: "",
-            smoking_preference: "",
-            accessibility: "",
-            accessibility_specification: "",
-            budget: "",
-            other_budget: "",
-            payment_method: "",
-            amenities: [],
+          full_name: "",
+          email: "",
+          contact_number: "",
+          check_in: "",
+          check_out: "",
+          adults: 0,
+          children: 0,
+          purpose: "",
+          other_purpose : "",
+          budget: "",
+          other_budget: "",
+          accommodation_type:"",
+          amenities: [],
         });
       }
     } catch (error) {
@@ -180,13 +177,15 @@ const AccommodationBooking = () => {
       console.error("Error submitting booking:", error); // Log the error for debugging
     }
   };
-  
+ 
+
 
   return (
     <section className={style.page}>
       <Header />
       <form className="form-container" id="bookingForm" onSubmit={handleSubmit}>
         <h2>Accommodation Booking Form</h2>
+
 
         <div className={style.fieldContainer}>
           <h3>1. Personal Information</h3>
@@ -199,6 +198,7 @@ const AccommodationBooking = () => {
           />
           </label>
 
+
           <label className={style.fieldLabel}>Email Address:
           <input
             type="email"
@@ -207,6 +207,7 @@ const AccommodationBooking = () => {
             onChange={handleInputChange}
           />
           </label>
+
 
           <label className={style.fieldLabel}>Phone Number:
           <PhoneInput
@@ -217,11 +218,12 @@ const AccommodationBooking = () => {
           />
           </label>
 
+
           <label className={style.fieldLabel}>
         Accommodation Type:
         <select
           name="accommodationBooking"
-          value={formData.accommodationBooking || ""}
+          value={formData.accommodation_type}
           onChange={handleChange}
         >
           <option value="">Select Type</option>
@@ -229,6 +231,7 @@ const AccommodationBooking = () => {
           <option value="private_rental">Private Rental</option>
         </select>
       </label>
+
 
       {selectedAccommodation && (
         <div>
@@ -238,7 +241,7 @@ const AccommodationBooking = () => {
             Object.entries(accommodationFeatures.lodging).map(
               ([category, features]) =>
                 // Exclude Room Types and Bed Preferences for Lodging
-                category !== "roomTypes" &&
+                category !== "room_types" &&
                 category !== "bedPreferences" && (
                   <div key={category}>
                     <h4><label className={style.fieldLabel} htmlFor="">{category.replace(/([A-Z])/g, " $1")}</label></h4> {/* Format category names */}
@@ -258,6 +261,7 @@ const AccommodationBooking = () => {
                 )
             )}
 
+
           {/* Handle Private Rental Amenities */}
           {selectedAccommodation === "private_rental" &&
             accommodationFeatures.private_rental.map((feature) => (
@@ -274,32 +278,37 @@ const AccommodationBooking = () => {
         </div>
       )}
 
+
       {/* Preferences Section */}
       {selectedAccommodation && (
-        <div>
+        <div >
           <h3>Preferences:</h3>
-          <div>
+
+
+          <label className="style.fieldLabel">
+          <div className="inline-field">
             <label className={style.fieldLabel}>
               Number of Rooms:
               <input
                 type="number"
                 name="numberOfRooms"
-                placeholder={accommodationFeatures.preferences.numberOfRooms}
-                onChange={handleChange}
+                value={formData.numberOfRooms}
+                onChange={handleInputChange}
               />
             </label>
           </div>
-          <div>
+          <div className="inline-field">
             <label className={style.fieldLabel}>
               Number of Beds:
               <input
                 type="number"
                 name="numberOfBeds"
-                placeholder={accommodationFeatures.preferences.numberOfBeds}
-                onChange={handleChange}
+                value={formData.numberOfBeds}
+                onChange={handleInputChange}
               />
             </label>
           </div>
+          </label>
           <div>
             <h4><label className={style.fieldLabel}>View Preferences:</label></h4>
             {accommodationFeatures.preferences.viewPreferences.map((view) => (
@@ -333,15 +342,15 @@ const AccommodationBooking = () => {
               </div>
               <div>
                 <h4><label className={style.fieldLabel}>Room Types:</label></h4>
-                {accommodationFeatures.preferences.roomTypes.map((roomType) => (
-                  <label key={roomType} className={style.fieldLabel}>
+                {accommodationFeatures.preferences.room_type.map((room_type) => (
+                  <label key={room_type} className={style.fieldLabel}>
                     <input
                       type="checkbox"
-                      value={roomType}
-                      checked={formData.amenities.includes(roomType)}
+                      value={room_type}
+                      checked={formData.amenities.includes(room_type)}
                       onChange={handleAmenityChange}
                     />
-                    {roomType}
+                    {room_type}
                   </label>
                 ))}
               </div>
@@ -351,52 +360,65 @@ const AccommodationBooking = () => {
       )}
 
 
+
+
         </div>
+
 
                 <div className={style.fieldContainer}>
           <h3>2. Stay Details</h3>
           <label className={style.fieldLabel}>Check-in Date:
-          <input type="date" name="check_in"   value={formData.check_in || ""} onChange={handleInputChange}/>
+          <input type="date" name="check_in"  value={formData.check_in} onChange={handleInputChange} />
           </label>
-  
+ 
           <label className={style.fieldLabel}>Check-out Date:
-          <input type="date" name="check_out"   value={formData.check_out || ""} onChange={handleInputChange}/>
+          <input type="date" name="check_out" value={formData.check_out} onChange={handleInputChange} />
           </label>
-  
+ 
           <label className={style.fieldLabel}>Number of Guests:
           <div className="inline-field">
-            <label className={style.fieldLabel}>Adults:
-            <input type="number" name="children" value={formData.children} onChange={handleInputChange} />
+            <label className={style.fieldLabel}>
+              Adults:
+            <input
+            type="number"
+            name="adults"
+            value={formData.adults}
+            onChange={handleInputChange} />
             </label>
           </div>
           <div className="inline-field">
-            <label className={style.fieldLabel}>Children:
-            <input type="number" name="infants" value={formData.infants} onChange={handleInputChange} />
+            <label className={style.fieldLabel}>
+              Children:
+            <input
+            type="number"
+            name="children"
+            value={formData.children}
+            onChange={handleInputChange} />
             </label>
           </div>
           </label>
-  
+ 
           <label className={style.fieldLabel}>Purpose of Stay:
-          <select name="purpose">
+          <select name="purpose" value={formData.purpose} onChange={handleInputChange}>
             <option value="Leisure">Leisure</option>
             <option value="Business">Business</option>
             <option value="Event/Conference">Event/Conference</option>
             <option value="Other">Other (specify below)</option>
           </select>
-          <input type="text" name="other_purpose" placeholder="Specify if other" />
+          <input type="text" value={formData.other_purpose} name="other_purpose" placeholder="Specify if other" />
           </label>
         </div>
         <div className={style.fieldContainer}>
           <h3>3. Budget and Payment Preferences</h3>
           <label className={style.fieldLabel}>Budget Range (per night):
-          <select name="budget"   value={formData.budget || ""} onChange={handleInputChange}>
+          <select name="budget" value={formData.budget} onChange={handleInputChange}>
             <option value="$50 - $100">$50 - $100</option>
             <option value="$101 - $200">$101 - $200</option>
             <option value="$201 - $300">$201 - $300</option>
             <option value="$301 - $500">$301 - $500</option>
             <option value="Other">Other (specify below)</option>
           </select>
-          <input type="text" name="other_budget" placeholder="Specify if other" />
+          <input type="text" name="other_budget" placeholder="Specify if other"  value={formData.other_budget} onChange={handleInputChange}/>
           </label>
         </div>
         <button className={style.submitBtn} type="submit">
@@ -407,5 +429,6 @@ const AccommodationBooking = () => {
     </section>
   );
 };
+
 
 export default AccommodationBooking;
