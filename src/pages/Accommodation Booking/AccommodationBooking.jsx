@@ -5,11 +5,10 @@ import { toast } from "react-toastify"
 import PhoneInput from "react-phone-input-2"
 import "react-phone-input-2/lib/style.css"
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner"
-import Header from "../../components/Blue Header/BlueHeader"
-import Footer from "../../components/Footer/Footer"
-import style from "../Flight Booking/FlightBooking.module.css"
-import accommodationBooking from "../../hooks/AccommodationBooking"
-
+import Header from "../../components/Blue Header/BlueHeader";
+import Footer from "../../components/Footer/Footer";
+import style from "../Flight Booking/FlightBooking.module.css";
+import accommodationBooking from "../../hooks/AccommodationBooking";
 const AccommodationBooking = () => {
   const initialUser = {
     full_name: "",email: "",
@@ -26,6 +25,7 @@ const AccommodationBooking = () => {
   const [formData, setFormData] = useState(initialUser)
   const [loading, setLoading] = useState(false)
   const [selectedAccommodation, setSelectedAccommodation] = useState("");
+
 
   const accommodationFeatures = {
     lodging: {
@@ -98,6 +98,7 @@ const AccommodationBooking = () => {
       throw error
     }
   }
+
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -179,12 +180,11 @@ const AccommodationBooking = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault(); // Prevent default form submission behavior
     setLoading(true)
   
     try {
-
-      const response = await accommodationBooking(formData)
+      const response = await accommodationBooking(formData); // Use the hook to submit data
       if (response) {
         toast.success("Booking submitted successfully!")
         setFormData(initialUser)
@@ -207,6 +207,7 @@ const AccommodationBooking = () => {
       <form className="form-container" id="bookingForm" onSubmit={handleSubmit}>
         <h2>Accommodation Booking Form</h2>
 
+
         <div className={style.fieldContainer}>
           <h3>1. Personal Information</h3>
           <label className={style.fieldLabel}>Full Name:
@@ -218,6 +219,7 @@ const AccommodationBooking = () => {
           />
           </label>
 
+
           <label className={style.fieldLabel}>Email Address:
           <input
             type="email"
@@ -227,6 +229,7 @@ const AccommodationBooking = () => {
           />
           </label>
 
+
           <label className={style.fieldLabel}>Phone Number:
           <PhoneInput
             country={"ke"}
@@ -235,6 +238,7 @@ const AccommodationBooking = () => {
             inputStyle={{ width: "100%" }}
           />
           </label>
+
 
           <label className={style.fieldLabel}>
             Accommodation Type:
@@ -381,11 +385,11 @@ const AccommodationBooking = () => {
           <label className={style.fieldLabel}>Check-in Date:
             <input type="date" name="check_in" onChange={handleInputChange}/>
           </label>
-  
+ 
           <label className={style.fieldLabel}>Check-out Date:
             <input type="date" name="check_out" onChange={handleInputChange} />
           </label>
-  
+ 
           <label className={style.fieldLabel}>Number of Guests:
             <div className="inline-field">
               <label className={style.fieldLabel}>Adults:
@@ -398,7 +402,7 @@ const AccommodationBooking = () => {
               </label>
             </div>
           </label>
-  
+ 
           <label className={style.fieldLabel}>Purpose of Stay:
             <select name="purpose"  value={formData.purpose} onChange={handleChange}>
               <option value="Leisure">Leisure</option>
@@ -444,5 +448,6 @@ const AccommodationBooking = () => {
     </section>
   );
 };
+
 
 export default AccommodationBooking;
