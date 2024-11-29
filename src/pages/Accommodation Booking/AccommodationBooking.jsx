@@ -1,4 +1,3 @@
-// src/components/BookingForm.jsx
 import { useState } from "react";
 import "./AccommodationBooking.module.css"
 import { toast } from "react-toastify"
@@ -94,7 +93,6 @@ const AccommodationBooking = () => {
     try {
       setFormData({ ...formData, contact_number: phone })
     } catch (error) {
-      console.log(error)
       throw error
     }
   }
@@ -108,7 +106,6 @@ const AccommodationBooking = () => {
         [name]: type === "checkbox" ? checked : value,
       })
     } catch (error) {
-      console.log(error)
       throw error
     }
   }
@@ -123,7 +120,6 @@ const AccommodationBooking = () => {
             setFormData((prevData) => ({ ...prevData, amenities: [] }))
           }
       } catch (error) {
-          console.log(error)
           throw error
       }
   }
@@ -140,7 +136,6 @@ const AccommodationBooking = () => {
             return { ...prevData, amenities: updatedAmenities }
           })
       } catch (error) {
-          console.log(error)
           throw error
       }
   }
@@ -157,7 +152,6 @@ const AccommodationBooking = () => {
           return { ...prevData, view_preferences: updatedViews }
         })
     } catch (error) {
-        console.log(error)
         throw error
     }
   }
@@ -174,17 +168,16 @@ const AccommodationBooking = () => {
           return { ...prevData, bed_preferences: updatedBeds }
         })
     } catch (error) {
-        console.log(error)
         throw error
     }
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault()
     setLoading(true)
   
     try {
-      const response = await accommodationBooking(formData); // Use the hook to submit data
+      const response = await accommodationBooking(formData)
       if (response) {
         toast.success("Booking submitted successfully!")
         setFormData(initialUser)
