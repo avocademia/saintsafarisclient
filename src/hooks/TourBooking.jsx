@@ -9,7 +9,7 @@ const tourBooking = async (formData) => {
     
     try {
         
-        const authorized = authCheck()
+        const authorized = await authCheck()
         if (authorized === true) {
             await axios.post(`${environment ==='production'? prodUrl:devUrl}/api/tour-bookings`, formData);
         }

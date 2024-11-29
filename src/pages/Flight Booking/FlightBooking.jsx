@@ -13,7 +13,7 @@ import travellers from "../../hooks/Travellers"
 import multiCity from "../../hooks/MultiCity"
 
 const FlightBooking = () => {
-  const [formData, setFormData] = useState({
+  const initialUser = {
     title: "",
     full_name: "",
     phone: "",
@@ -30,8 +30,8 @@ const FlightBooking = () => {
     multiCityDestinations: [],
     travelers: [],
     visaAssistance: false,
-  })
-
+  }
+  const [formData, setFormData] = useState(initialUser)
   const [loading, setLoading] = useState(false)
   const countries = countryList().getData()
   const handlePhoneChange = (phone) => {
@@ -100,6 +100,7 @@ const FlightBooking = () => {
         await multiCity({cities: formData.multiCityDestinations, booking: response.bookingId})
       }
       toast.success("Booking completed successfully!")
+      setFormData(initialUser)
     } catch (error) {
       console.log(error)
       toast.error("There was an error with the booking. Please try again.");
@@ -206,7 +207,7 @@ const FlightBooking = () => {
                 </label>
             </div>
 
-            {formData.tripType === 'one-way' && (
+            {(formData.tripType === 'one-way' || formData.tripType === 'return') && (
                 <div className={style.fieldContainer}>
                     <label className={style.fieldLabel}>Destination:
                         <input type="text" name="destination" value={formData.destination} onChange={handleInputChange} />

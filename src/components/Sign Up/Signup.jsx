@@ -120,10 +120,10 @@ const Signup = () => {
 
     try {
       await signup(user)
-      //setUser(initialUser)
-      //navigate("/")
+      setUser(initialUser)
+      navigate("/")
     } catch (error) {
-      //setUser(initialUser)
+      setUser(initialUser)
     }
   }
 

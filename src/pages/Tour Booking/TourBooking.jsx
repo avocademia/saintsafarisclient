@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
-import axios from "axios"
 import fetchTours from "../../hooks/ToursFetch"
 import style from "./TourBooking.module.css"
 import Header from "../../components/Blue Header/BlueHeader"
 import Footer from '../../components/Footer/Footer'
 import { toast , ToastContainer} from 'react-toastify'
 import tourBooking from '../../hooks/TourBooking'
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner'
 
 const BookingForm = () => {
-    const [tours, setTours] = useState([])
 
     useEffect(()=> {
 
@@ -25,7 +24,7 @@ const BookingForm = () => {
         getTours()
     }, [])
 
-    const [formData, setFormData] = useState({
+    const initialUser = {
         tour: '',
         first_name: '',
         surname: '',
@@ -36,7 +35,10 @@ const BookingForm = () => {
         city: '',
         travel_date: '',
         message: '',
-    })
+    }
+    const [formData, setFormData] = useState(initialUser)
+    const [tours, setTours] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -44,39 +46,36 @@ const BookingForm = () => {
     }
 
     const handleSubmit = async (e) => {
-
+        setLoading(true)
         e.preventDefault()
+
         try {
-            await tourBooking(formData)
+  
+            const updatedFormData = { 
+                ...formData, 
+                children: formData.children === "" ? '0' : formData.children,
+            }
+            await tourBooking(updatedFormData)
+            setFormData(initialUser)
+            setLoading(false)
             toast('Booking Successfully sent! We will contact you soon.', {
                 hideProgressBar: true,
             })
-
-            setFormData({
-                tour: '',
-                first_name: '',
-                surname: '',
-                phone: '',
-                email: '',
-                adults: '',
-                children: '',
-                city: '',
-                travel_date: '',
-                message: '',
-            })
+    
         } catch (error) {
-            
-            toast('Failed to submit booking form. Try Again Later', {
+            setLoading(false)  
+            toast(error.response.data.error.message, {
                 hideProgressBar: true,
             })
-            console.log(error)
             throw error
         }
     }
 
+    if (loading) return <LoadingSpinner/>
+
     return (
         <section className={style.page}>
-            <ToastContainer/>
+            <ToastContainer autoClose={5000}/>
             <Header/>
             <form onSubmit={handleSubmit}>
                 <div className={style.fieldContainer}>
@@ -126,7 +125,7 @@ const BookingForm = () => {
                 <div className={style.fieldContainer}>
                     <label className={style.fieldLabel}>
                         No. of Children Traveling (under 13):
-                        <input type="number" name="children" value={formData.children} onChange={handleInputChange} />
+                        <input type="number" name="children" value={formData.children} onChange={handleInputChange} min={0} placeholder={0}/>
                     </label>
                 </div>
                 <div className={style.fieldContainer}>
