@@ -94,30 +94,6 @@ const BookingForm = () => {
                 </div>
                 <div className={style.fieldContainer}>
                     <label className={style.fieldLabel}>
-                        First Name:
-                        <input type="text" name="first_name" value={formData.first_name} onChange={handleInputChange} />
-                    </label>
-                </div>
-                <div className={style.fieldContainer}>
-                    <label className={style.fieldLabel}>
-                        Last Name:
-                        <input type="text" name="surname" value={formData.surname} onChange={handleInputChange} />
-                    </label>
-                </div>
-                <div className={style.fieldContainer}>
-                    <label className={style.fieldLabel}>
-                        Phone No.:
-                        <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} />
-                    </label>
-                </div>
-                <div className={style.fieldContainer}>
-                    <label className={style.fieldLabel}>
-                        Email:
-                        <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
-                    </label>
-                </div>
-                <div className={style.fieldContainer}>
-                    <label className={style.fieldLabel}>
                         No. of Adults Traveling (13+):
                         <input type="number" name="adults" value={formData.adults} onChange={handleInputChange} />
                     </label>

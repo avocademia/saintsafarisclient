@@ -9,9 +9,7 @@ import Footer from "../../components/Footer/Footer";
 import style from "../Flight Booking/FlightBooking.module.css";
 import accommodationBooking from "../../hooks/AccommodationBooking";
 const AccommodationBooking = () => {
-  const initialUser = {
-    full_name: "",email: "",
-    contact_number: "", 
+  const initialUser = { 
     check_in: "",check_out: "",
     adults: 0,children: 0,
     purpose: "",other_purpose : "",
@@ -87,14 +85,6 @@ const AccommodationBooking = () => {
         "Mountain View",
       ],
     },
-  }
-
-  const handlePhoneChange = (phone) => {
-    try {
-      setFormData({ ...formData, contact_number: phone })
-    } catch (error) {
-      throw error
-    }
   }
 
 
@@ -202,36 +192,6 @@ const AccommodationBooking = () => {
 
 
         <div className={style.fieldContainer}>
-          <h3>1. Personal Information</h3>
-          <label className={style.fieldLabel}>Full Name:
-          <input
-            type="text"
-            name="full_name"
-            value={formData.full_name}
-            onChange={handleInputChange}
-          />
-          </label>
-
-
-          <label className={style.fieldLabel}>Email Address:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-          </label>
-
-
-          <label className={style.fieldLabel}>Phone Number:
-          <PhoneInput
-            country={"ke"}
-            value={formData.contact_number}
-            onChange={handlePhoneChange}
-            inputStyle={{ width: "100%" }}
-          />
-          </label>
-
 
           <label className={style.fieldLabel}>
             Accommodation Type:

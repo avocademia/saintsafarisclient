@@ -1,5 +1,5 @@
 import axios from "axios"
-import authCheck from "./AuthCheck"
+import { setCookie } from "../Helpers"
 
 const tourBooking = async (formData) => {
     
@@ -9,10 +9,13 @@ const tourBooking = async (formData) => {
     
     try {
         
-        const authorized = await authCheck()
-        if (authorized === true) {
-            await axios.post(`${environment ==='production'? prodUrl:devUrl}/api/tour-bookings`, formData);
+        const response = await axios.post(`${environment ==='production'? prodUrl:devUrl}/api/tour-bookings`, formData, {
+            withCredentials: true
+        })
+        if (response.data.jwt && typeof response.data.jwt === 'string') {
+            setCookie('acst', response.data.jwt, 30)
         }
+        return response.data
         
     } catch (error) {
         throw error

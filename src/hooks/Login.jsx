@@ -1,5 +1,5 @@
 import axios from "axios"
-import { storeToken, storeUser } from "../Helpers"
+import { setCookie, storeToken, storeUser } from "../Helpers"
 import { toast } from "react-toastify"
 
 const login = async (user) => {
@@ -17,11 +17,15 @@ const login = async (user) => {
             const {data} = res
 
             if (data.jwt && data.user) {
+
                 toast.success("logged In succesfully",{
                 hideProgressBar: true,
                 })
+
                 storeUser(data.user)
                 storeToken(data.jwt)
+                setCookie('acst',data.jwt,30)
+                
             }
       }
     } catch (error) {

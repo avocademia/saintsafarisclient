@@ -1,6 +1,6 @@
 import axios from "axios"
-import authCheck from '../hooks/AuthCheck'
 import { toast } from "react-toastify"
+import {setCookie} from '../Helpers'
 
 const accommodationBooking = async (data) => {
     
@@ -9,14 +9,15 @@ const accommodationBooking = async (data) => {
     const environment = import.meta.env.NODE_ENV
 
     try {
-        const authorized = await authCheck()
-        if (authorized === true) {
-            const response = await axios.post(`${environment === 'production' ? prodUrl : devUrl}/api/accommodation-booking`, data)
-            return response.data
-        } else {
-            toast.error('Authorization failed. Please log in again.')
-            return null
+        const response = await axios.post(`${environment === 'production' ? prodUrl : devUrl}/api/accommodation-booking`, data, {
+            withCredentials: true
+        })
+        
+        console.log(response.data.jwt)
+        if (response.data.jwt && typeof response.data.jwt === 'string') {
+            setCookie('acst', response.data.jwt, 30)
         }
+        return response.data
     } catch (error) {
         toast.error('An error occurred while processing your booking. Please try again.')
         throw error

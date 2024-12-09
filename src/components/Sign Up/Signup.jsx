@@ -1,8 +1,9 @@
-import styled from "styled-components";
-import { useState } from "react";
-import { ToastContainer } from "react-toastify";
-import signup from '../../hooks/Signup';
-import { useNavigate } from "react-router-dom";
+import styled from "styled-components"
+import { useState } from "react"
+import { ToastContainer } from "react-toastify"
+import signup from '../../hooks/Signup'
+import { useNavigate } from "react-router-dom"
+import PhoneInput from "react-phone-input-2"
 
 const SignUpForm = styled.form`
   display: flex;
@@ -187,6 +188,17 @@ const Signup = () => {
           required
           value={user.email}
           onChange={handleChange}
+        />
+      </FieldContainer>
+
+      <FieldContainer>
+        <PhoneInput
+           country={'ke'}
+           name="phone_number"
+           value={user.phone_number}
+           onChange={handleChange}
+           inputStyle={{ width: '100%' }}
+           required
         />
       </FieldContainer>
 
