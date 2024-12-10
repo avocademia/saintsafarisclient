@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { setCookie } from '../Helpers'
 
 const useSubmitReview = async (data) => {
 
@@ -8,7 +9,7 @@ const useSubmitReview = async (data) => {
     
     try {
 
-        const response = axios.post(`${environment === 'production'? prodUrl : devUrl}/api/reviews/create`, 
+        const response = await axios.post(`${environment === 'production'? prodUrl : devUrl}/api/reviews/create`, 
             {data},
             {withCredentials: true}
         )

@@ -1,6 +1,6 @@
 import axios from "axios"
 import {toast} from 'react-toastify'
-import { clearUserData, setCookie } from "../Helpers"
+import { setCookie } from "../Helpers"
 
  export const sendQuery = async (data) => {
     
